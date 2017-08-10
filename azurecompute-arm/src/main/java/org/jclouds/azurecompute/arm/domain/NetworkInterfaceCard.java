@@ -51,6 +51,7 @@ public abstract class NetworkInterfaceCard {
                                              final String location,
                                              final NetworkInterfaceCardProperties properties,
                                              final Map<String, String> tags) {
-      return new AutoValue_NetworkInterfaceCard(name, id, etag, location, properties, tags == null ? null : ImmutableMap.copyOf(tags));
+      return new AutoValue_NetworkInterfaceCard(name, id, etag, location, properties,
+         tags != null ? ImmutableMap.copyOf(tags) : null);
    }
 }

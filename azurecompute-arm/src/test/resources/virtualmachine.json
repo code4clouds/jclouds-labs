@@ -36,7 +36,6 @@
             "id": "/subscriptions/SUBSCRIPTIONID/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/osDisk",
             "storageAccountType": "Standard_LRS"
           },
-          "createOption":"Empty",
           "caching": "ReadWrite"
         }
       ]
@@ -57,8 +56,8 @@
         },
         "additionalUnattendContent":[
           {
-            "pass":"oobesystem",    
-            "component":"Microsoft-Windows-Shell-Setup",
+            "passName":"oobesystem",    
+            "componentName":"Microsoft-Windows-Shell-Setup",
             "settingName":"FirstLogonCommands",
             "content":"<XML unattend content>"
           }

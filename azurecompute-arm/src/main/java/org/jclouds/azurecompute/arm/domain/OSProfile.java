@@ -148,15 +148,15 @@ public abstract class OSProfile {
 
          public abstract String settingName();
 
-         public abstract String content();
+         @Nullable public abstract String content();
 
-         @SerializedNames({"pass", "component", "settingName", "content"})
-         public static AdditionalUnattendContent create(final String pass, final String component,
+         @SerializedNames({"passName", "componentName", "settingName", "content"})
+         public static AdditionalUnattendContent create(final String passName, final String componentName,
                                                         final String settingName,
                                                         final String content) {
 
             return new AutoValue_OSProfile_WindowsConfiguration_AdditionalUnattendContent(
-                    pass, component, settingName, content);
+                    passName, componentName, settingName, content);
          }
       }
 

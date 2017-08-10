@@ -16,10 +16,6 @@
  */
 package org.jclouds.azurecompute.arm.compute;
 
-import static org.jclouds.compute.config.ComputeServiceProperties.TIMEOUT_NODE_RUNNING;
-import static org.jclouds.compute.config.ComputeServiceProperties.TIMEOUT_NODE_SUSPENDED;
-import static org.jclouds.compute.config.ComputeServiceProperties.TIMEOUT_NODE_TERMINATED;
-
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -65,6 +61,10 @@ import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.util.concurrent.ListeningExecutorService;
+
+import static org.jclouds.compute.config.ComputeServiceProperties.TIMEOUT_NODE_RUNNING;
+import static org.jclouds.compute.config.ComputeServiceProperties.TIMEOUT_NODE_SUSPENDED;
+import static org.jclouds.compute.config.ComputeServiceProperties.TIMEOUT_NODE_TERMINATED;
 
 @Singleton
 public class AzureComputeService extends BaseComputeService {
@@ -124,4 +124,5 @@ public class AzureComputeService extends BaseComputeService {
          cleanupResources.deleteResourceGroupIfEmpty(resourceGroup);
       }
    }
+   
 }

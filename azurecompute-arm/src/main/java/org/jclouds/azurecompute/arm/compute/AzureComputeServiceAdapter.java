@@ -96,9 +96,10 @@ import org.jclouds.location.Region;
 import org.jclouds.logging.Logger;
 
 import com.google.common.base.Function;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Predicate;
 import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import com.google.common.base.Supplier;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
@@ -375,13 +376,13 @@ public class AzureComputeServiceAdapter implements ComputeServiceAdapter<Virtual
 
    private OSProfile createOsProfile(String computerName, Template template) {
       String defaultLoginUser = template.getImage().getDefaultCredentials().getUser();
-      String adminUsername = Objects.firstNonNull(template.getOptions().getLoginUser(), defaultLoginUser);
+      String adminUsername = MoreObjects.firstNonNull(template.getOptions().getLoginUser(), defaultLoginUser);
       // Password already generated in CreateResourcesThenCreateNodes (if not set by user)
       String adminPassword = template.getOptions().getLoginPassword();
       OSProfile.Builder builder = OSProfile.builder().adminUsername(adminUsername).adminPassword(adminPassword)
               .computerName(computerName);
 
-      if (template.getOptions().getPublicKey() != null
+      if (!Strings.isNullOrEmpty(template.getOptions().getPublicKey())
               && OsFamily.WINDOWS != template.getImage().getOperatingSystem().getFamily()) {
          OSProfile.LinuxConfiguration linuxConfiguration = OSProfile.LinuxConfiguration.create("true",
                  OSProfile.LinuxConfiguration.SSH.create(of(
@@ -391,7 +392,6 @@ public class AzureComputeServiceAdapter implements ComputeServiceAdapter<Virtual
          builder.linuxConfiguration(linuxConfiguration);
       }
 
-
       AzureTemplateOptions azureTemplateOptions = template.getOptions().as(AzureTemplateOptions.class);
 
       if (azureTemplateOptions.getWindowsConfiguration() != null) {
@@ -400,6 +400,10 @@ public class AzureComputeServiceAdapter implements ComputeServiceAdapter<Virtual
 
       if (azureTemplateOptions.getSecrets() != null) {
           builder.secrets(azureTemplateOptions.getSecrets());
+      }
+
+      if (!Strings.isNullOrEmpty(azureTemplateOptions.getCustomData())) {
+         builder.customData(azureTemplateOptions.getCustomData());
       }
 
       return builder.build();
