@@ -70,12 +70,6 @@ public abstract class VirtualMachineScaleSet {
     @Nullable
     public abstract VirtualMachineScaleSetPlan plan();
 
-
-
-
-
-
-
     /**
      * Specifies the properties of the availability set
      */
