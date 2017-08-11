@@ -75,10 +75,10 @@ public interface VirtualMachineScaleSetApi extends Closeable {
    @Path("/{name}")
    @PUT
    VirtualMachineScaleSet createOrUpdate(@PathParam("name") String name,
-                                  @Nullable @PayloadParam("sku") VirtualMachineScaleSetSKU sku,
+                                  @PayloadParam("sku") VirtualMachineScaleSetSKU sku,
                                   @PayloadParam("location") String location,
                                   @Nullable @PayloadParam("tags") Map<String, String> tags,
-                                  @PayloadParam("properties") VirtualMachineProperties properties);
+                                  @PayloadParam("properties") VirtualMachineScaleSetProperties properties);
 
    @Named("virtualmachinescaleset:delete")
    @Path("/{name}")

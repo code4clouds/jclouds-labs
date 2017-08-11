@@ -31,26 +31,31 @@ import org.jclouds.json.SerializedNames;
 @AutoValue
 public abstract class VirtualMachineScaleSetProperties {
     /**
-     * The name of the VirtualMachineScaleSetProperties
+     * The singlePlacementGroup of the VirtualMachineScaleSetProperties
      */
     @Nullable
-    public abstract String name();
+    public abstract Boolean singlePlacementGroup();
 
     /**
-     * The location of the VirtualMachineScaleSetProperties
+     *  Specifies the over provision of the virtual machine scale set
      */
     @Nullable
-    public abstract String tier();
+    public abstract Boolean overProvision();
 
     /**
-     * The id of the VirtualMachineScaleSetProperties
+     *  Specifies the upgrade policy of the virtual machine scale set
      */
-    public abstract int capacity();
+    public abstract VirtualMachineScaleSetUpgradePolicy upgradePolicy();
 
-    @SerializedNames({"name", "tier", "capacity"})
-    public static VirtualMachineScaleSetProperties create(final String name, final String tier, final int capacity) {
+    /**
+     *  Specifies the virtual machine profile of the virtual machine scale set
+     */
+    public abstract VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile();
 
-        return new AutoValue_VirtualMachineScaleSetProperties(name, tier, capacity);
+    @SerializedNames({"singlePlacementGroup", "overProvision", "upgradePolicy", "virtualMachineProfile"})
+    public static VirtualMachineScaleSetProperties create(final Boolean singlePlacementGroup, final Boolean overProvision, final VirtualMachineScaleSetUpgradePolicy upgradePolicy, final VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile) {
+
+        return new AutoValue_VirtualMachineScaleSetProperties(singlePlacementGroup, overProvision, upgradePolicy, virtualMachineProfile);
     }
 }
 

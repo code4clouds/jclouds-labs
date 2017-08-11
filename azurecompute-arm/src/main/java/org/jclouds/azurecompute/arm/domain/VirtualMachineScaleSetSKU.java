@@ -28,13 +28,11 @@ public abstract class VirtualMachineScaleSetSKU {
     /**
      * The name of the VirtualMachineScaleSetSKU
      */
-    @Nullable
     public abstract String name();
 
     /**
      * The location of the VirtualMachineScaleSetSKU
      */
-    @Nullable
     public abstract String tier();
 
     /**

@@ -55,7 +55,6 @@ public abstract class VirtualMachineScaleSet {
     /**
      * Specifies the type of the virtual machine scale set
      */
-    @Nullable
     public abstract VirtualMachineScaleSetSKU sku();
 
     /**
@@ -64,29 +63,18 @@ public abstract class VirtualMachineScaleSet {
     @Nullable
     public abstract Map<String, String> tags();
 
-    @Nullable
-    public abstract Boolean singlePlacementGroup();
 
+    /**
+     * Specifies the optional plan of the virtual machine scale set (only for market image)
+     */
     @Nullable
     public abstract VirtualMachineScaleSetPlan plan();
 
-    /**
-     *  Specifies the virtual machine profile of the virtual machine scale set
-     */
-    @Nullable
-    public abstract VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile();
 
-    /**
-     *  Specifies the upgrade policy of the virtual machine scale set
-     */
-    @Nullable
-    public abstract VirtualMachineScaleSetUpgradePolicy upgradePolicy();
 
-    /**
-     *  Specifies the over provision of the virtual machine scale set
-     */
-    @Nullable
-    public abstract Boolean overProvision();
+
+
+
 
     /**
      * Specifies the properties of the availability set
@@ -94,19 +82,13 @@ public abstract class VirtualMachineScaleSet {
     @Nullable
     public abstract VirtualMachineScaleSetProperties properties();
 
-    @SerializedNames({  "id", "name", "location","sku", "tags", "plan", "singlePlacementGroup", "plan", "profile",
-            "upgradePolicy", "overProvision", "properties"})
+    @SerializedNames({  "id", "name", "location","sku", "tags", "plan", "properties"})
     public static VirtualMachineScaleSet create(final String id, final String name, final String location,
                                                 VirtualMachineScaleSetSKU sku, final Map<String, String> tags,
-                                                Boolean singlePlacementGroup,
                                                 VirtualMachineScaleSetPlan plan,
-                                                VirtualMachineScaleSetVirtualMachineProfile profile,
-                                                VirtualMachineScaleSetUpgradePolicy upgradePolicy,
-                                                Boolean overProvision,
                                                 VirtualMachineScaleSetProperties properties) {
         return builder().id(id).name(name).location(location).sku(sku).tags(tags)
-                .singlePlacementGroup(singlePlacementGroup).plan(plan).virtualMachineProfile(profile)
-                .upgradePolicy(upgradePolicy).overProvision(overProvision).properties(properties)
+                .plan(plan).properties(properties)
                 .build();
     }
 
@@ -124,11 +106,7 @@ public abstract class VirtualMachineScaleSet {
         public abstract Builder location(String location);
         public abstract Builder sku(VirtualMachineScaleSetSKU sku);
         public abstract Builder tags(Map<String, String> tags);
-        public abstract Builder singlePlacementGroup(Boolean singlePlacementGroup);
         public abstract Builder plan(VirtualMachineScaleSetPlan plan);
-        public abstract Builder virtualMachineProfile(VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile);
-        public abstract Builder upgradePolicy(VirtualMachineScaleSetUpgradePolicy upgradePolicy);
-        public abstract Builder overProvision(Boolean overProvision);
         public abstract Builder properties(VirtualMachineScaleSetProperties properties);
 
         abstract Map<String, String> tags();
