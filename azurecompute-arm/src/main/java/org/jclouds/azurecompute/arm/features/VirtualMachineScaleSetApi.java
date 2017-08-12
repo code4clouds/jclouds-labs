@@ -51,7 +51,7 @@ import java.util.Map;
  *
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/virtualmachinescalesets/">docs</a>
  */
-@Path("/resourceGroups/{resourcegroup}/providers/Microsoft.Compute/VirtualMachineScaleSets")
+@Path("/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/VirtualMachineScaleSets")
 @RequestFilters({OAuthFilter.class, ApiVersionFilter.class})
 @Consumes(MediaType.APPLICATION_JSON)
 public interface VirtualMachineScaleSetApi extends Closeable {

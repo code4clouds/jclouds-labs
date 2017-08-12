@@ -17,25 +17,50 @@
 package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableList;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
-import java.util.List;
 import java.util.Map;
 
 @AutoValue
-public abstract class ExtensionProfile {
+public abstract class ExtensionProperties {
 
     /**
-     * The Extensions of the extension profile
+     * The autoUpgradeMinorVersion reference of the extension profile
      */
-    public abstract List<Extension> extensions();
+    public abstract String publisher();
 
+    /**
+     * The autoUpgradeMinorVersion reference of the extension profile
+     */
+    public abstract String type();
 
-    @SerializedNames({"extensions"})
-    public static ExtensionProfile create(final List<Extension> extensions) {
-        return new AutoValue_ExtensionProfile(extensions);
+    /**
+     * The autoUpgradeMinorVersion reference of the extension profile
+     */
+    public abstract String typeHandlerVersion();
+
+    /**
+     * The autoUpgradeMinorVersion reference of the extension profile
+     */
+    public abstract Boolean autoUpgradeMinorVersion();
+
+    /**
+     * The ExtensionProfileSettings of the extension profile
+     */
+    public abstract ExtensionProfileSettings settings();
+
+    /**
+     * The list of the protectedSettings of the extension profile
+     */
+    @Nullable
+    public abstract Map<String, String> protectedSettings();
+
+    @SerializedNames({ "publisher", "type", "typeHandlerVersion", "autoUpgradeMinorVersion", "settings", "protectedSettings"})
+    public static ExtensionProperties create(final String publisher, String type, final String typeHandlerVersion,
+                                             final Boolean autoUpgradeMinorVersion, final ExtensionProfileSettings settings,
+                                             final Map<String, String> protectedSettings) {
+        return new AutoValue_ExtensionProperties(publisher, type, typeHandlerVersion, autoUpgradeMinorVersion, settings, protectedSettings);
     }
 }
 //      ExtensionProfile.Builder builder = ExtensionProfile.builder()

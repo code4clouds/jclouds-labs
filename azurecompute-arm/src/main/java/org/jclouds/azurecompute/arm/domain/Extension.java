@@ -17,7 +17,6 @@
 package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableList;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
@@ -25,17 +24,22 @@ import java.util.List;
 import java.util.Map;
 
 @AutoValue
-public abstract class ExtensionProfile {
+public abstract class Extension {
 
     /**
-     * The Extensions of the extension profile
+     * The autoUpgradeMinorVersion reference of the extension profile
      */
-    public abstract List<Extension> extensions();
+    public abstract String name();
+
+    /**
+     * The properties reference of the extension profile
+     */
+    public abstract ExtensionProperties properties();
 
 
-    @SerializedNames({"extensions"})
-    public static ExtensionProfile create(final List<Extension> extensions) {
-        return new AutoValue_ExtensionProfile(extensions);
+    @SerializedNames({"name", "properties"})
+    public static Extension create(final String name, final ExtensionProperties properties) {
+        return new AutoValue_Extension(name, properties);
     }
 }
 //      ExtensionProfile.Builder builder = ExtensionProfile.builder()
