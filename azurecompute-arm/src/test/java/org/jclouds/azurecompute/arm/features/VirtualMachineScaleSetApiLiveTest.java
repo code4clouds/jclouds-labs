@@ -16,6 +16,7 @@
  */
 package org.jclouds.azurecompute.arm.features;
 
+import com.google.common.collect.ImmutableMap;
 import com.sun.media.jfxmedia.logging.Logger;
 import org.jclouds.azurecompute.arm.domain.DataDisk;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineInstance.PowerState;
@@ -32,21 +33,25 @@ import org.jclouds.azurecompute.arm.domain.ExtensionProfile;
 import org.jclouds.azurecompute.arm.domain.ExtensionProfileSettings;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetVirtualMachineProfile;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetProperties;
-import org.jclouds.azurecompute.arm.domain.ExtensionProfile;
+import org.jclouds.azurecompute.arm.domain.Subnet;
+import org.jclouds.azurecompute.arm.domain.NetworkInterfaceCard;
+import org.jclouds.azurecompute.arm.domain.NetworkInterfaceCardProperties;
+import org.jclouds.azurecompute.arm.domain.IpConfiguration;
+import org.jclouds.azurecompute.arm.domain.IdReference;
+import org.jclouds.azurecompute.arm.domain.IpConfigurationProperties;
+import org.jclouds.azurecompute.arm.domain.Extension;
+import org.jclouds.azurecompute.arm.domain.ExtensionProperties;
 import org.jclouds.azurecompute.arm.internal.BaseAzureComputeApiLiveTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import sun.rmi.runtime.Log;
-
-import javax.xml.crypto.Data;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.logging.Level;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.jclouds.util.Predicates2.retry;
@@ -60,7 +65,9 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
     private String subscriptionid;
     private String vmssName;
     private VirtualMachineScaleSetSKU SKU;
+    private String nicName;
     private String virtualNetworkName;
+    private String subnetId;
 
     @BeforeClass
     @Override
@@ -74,6 +81,15 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
 
         // Subnets belong to a virtual network so that needs to be created first
         assertNotNull(createDefaultVirtualNetwork(resourceGroupName, virtualNetworkName, "10.2.0.0/16", LOCATION));
+
+        //Subnet needs to be up & running before NIC can be created
+        String subnetName = String.format("s-%s-%s", this.getClass().getSimpleName().toLowerCase(), System.getProperty("user.name"));
+        Subnet subnet = createDefaultSubnet(resourceGroupName, subnetName, virtualNetworkName, "10.2.0.0/23");
+        assertNotNull(subnet);
+        assertNotNull(subnet.id());
+        subnetId = subnet.id();
+
+
 
         vmssName = String.format("%3.24s", System.getProperty("user.name") + RAND + this.getClass().getSimpleName()).toLowerCase().substring(0, 15);
         Logger.logMsg(Logger.INFO, "vmssName: " + vmssName);
@@ -126,25 +142,39 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
     }
 
     private StorageProfile getStorageProfile() {
-        return StorageProfile.create(getImageReference(), getOSDisk(), getDataDisks());
+        return StorageProfile.create(getWindowsImageReference(), getWindowsOSDisk(), getDataDisks());
     }
 
-    private StorageProfile getStorageProfile_Default() {
-        return StorageProfile.create(getImageReference(), getOSDisk(), null);
+    private StorageProfile getWindowsStorageProfile_Default() {
+        return StorageProfile.create(getWindowsImageReference(), getWindowsOSDisk(), null);
+    }
+
+    private StorageProfile getLinuxStorageProfile_Default() {
+        return StorageProfile.create(getLinuxImageReference(), getLinuxOSDisk(), null);
     }
 
     private ManagedDiskParameters getManagedDiskParameters() {
         return ManagedDiskParameters.create(null, "Standard_LRS");
     }
 
-    private OSDisk getOSDisk() {
-        return OSDisk.create("Windows", "OSDisk", null, null, "FromImage",
-                null, getManagedDiskParameters(), "Standard_LRS");
+    private OSDisk getWindowsOSDisk() {
+        return OSDisk.create("Windows", null, null, null, "FromImage",
+                null, getManagedDiskParameters(),  null);
     }
 
-    private ImageReference getImageReference() {
-        return ImageReference.create(null, "Microsoft.Windows", "Windows2014",
+    private OSDisk getLinuxOSDisk() {
+        return OSDisk.create("Linux", null, null, null, "FromImage",
+                null, getManagedDiskParameters(),  null);
+    }
+
+    private ImageReference getWindowsImageReference() {
+        return ImageReference.create(null, "Microsoft.Windows", "Windows2016",
                 "Enterprise", "latest");
+    }
+
+    private ImageReference getLinuxImageReference() {
+        return ImageReference.create(null, "Canonical", "UbuntuServer",
+                "16.04-LTS", "latest");
     }
 
     private OSProfile getOSProfile() {
@@ -159,11 +189,16 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
 
     private NetworkProfile getNetworkProfile() {
         List<NetworkProfile.NetworkInterface> networkInterfacesList = new ArrayList<NetworkProfile.NetworkInterface>();
-        //networkInterfacesList.add(NetworkProfile.NetworkInterface.create(null, NetworkProfile.NetworkInterface.NetworkInterfaceProperties.create(true)));
+
+        NetworkInterfaceCard nic = createNetworkInterfaceCard(resourceGroupName, "jc-nic-" + RAND, LOCATION, "ipConfig-" + RAND);
+        assertNotNull(nic);
+        networkInterfacesList.add(NetworkProfile.NetworkInterface.create(nic.id(), NetworkProfile.NetworkInterface.NetworkInterfaceProperties.create(true)));
         return NetworkProfile.create(networkInterfacesList);
     }
 
     private ExtensionProfile getExtensionProfile() {
+        List<Extension> extensions = new ArrayList<Extension>();
+
         List<String> uris = new ArrayList<String>();
         uris.add("https://mystorage1.blob.core.windows.net/winvmextekfacnt/SampleCmd_1.cmd");
         ExtensionProfileSettings extensionProfileSettings = ExtensionProfileSettings.create(uris, "SampleCmd_1.cmd");
@@ -171,18 +206,36 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
         Map<String, String> protectedSettings = new HashMap<String, String>();
         protectedSettings.put("StorageAccountKey", "jclouds-accountkey");
 
-        return ExtensionProfile.create("extensionName", "Microsoft.compute", "CustomScriptExtension",
+        ExtensionProperties extensionProperties = ExtensionProperties.create( "Microsoft.compute", "CustomScriptExtension",
                 "1.1", false, extensionProfileSettings,
                 protectedSettings);
+
+        Extension extension = Extension.create("extensionName",  extensionProperties);
+        extensions.add(extension);
+
+        return ExtensionProfile.create(extensions);
     }
 
+
     private VirtualMachineScaleSetVirtualMachineProfile getVirtualMachineProfile() {
-        return VirtualMachineScaleSetVirtualMachineProfile.create(getStorageProfile_Default(), getOSProfile(), getNetworkProfile(), getExtensionProfile());
+        return VirtualMachineScaleSetVirtualMachineProfile.create(getLinuxStorageProfile_Default(), getOSProfile(), getNetworkProfile(), getExtensionProfile());
     }
 
     public VirtualMachineScaleSetProperties getProperties() {
 
         return VirtualMachineScaleSetProperties.create(null, null, getUpgradePolicy(), getVirtualMachineProfile());
+    }
+
+    private NetworkInterfaceCard createNetworkInterfaceCard(final String resourceGroupName, String networkInterfaceCardName, String locationName, String ipConfigurationName) {
+        //Create properties object
+        final NetworkInterfaceCardProperties networkInterfaceCardProperties = NetworkInterfaceCardProperties
+                .builder()
+                .ipConfigurations(
+                        Arrays.asList(IpConfiguration.create(ipConfigurationName, null, null, null, IpConfigurationProperties
+                                .create(null, null, "Dynamic", IdReference.create(subnetId), null, null, null)))).build();
+
+        final Map<String, String> tags = ImmutableMap.of("jclouds", "livetest");
+        return api.getNetworkInterfaceCardApi(resourceGroupName).createOrUpdate(networkInterfaceCardName, locationName, networkInterfaceCardProperties, tags);
     }
 
     public String getSubscriptionid() {
