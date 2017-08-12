@@ -21,8 +21,6 @@ import org.jclouds.Fallbacks.NullOnNotFoundOr404;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSet;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetProperties;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetSKU;
-import org.jclouds.azurecompute.arm.domain.VirtualMachineProperties;
-import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSet;
 import org.jclouds.azurecompute.arm.filters.ApiVersionFilter;
 import org.jclouds.azurecompute.arm.functions.URIParser;
 import org.jclouds.javax.annotation.Nullable;

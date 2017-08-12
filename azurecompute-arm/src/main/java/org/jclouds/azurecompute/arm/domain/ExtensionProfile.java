@@ -37,7 +37,12 @@ public abstract class ExtensionProfile {
     */
     public abstract String publisher();
 
-   /**
+    /**
+     * The autoUpgradeMinorVersion reference of the extension profile
+     */
+    public abstract String type();
+
+    /**
     * The autoUpgradeMinorVersion reference of the extension profile
     */
     public abstract String typeHandlerVersion();
@@ -59,10 +64,10 @@ public abstract class ExtensionProfile {
    public abstract Map<String, String> protectedSettings();
 
     @SerializedNames({"name", "publisher", "type", "typeHandlerVersion", "autoUpgradeMinorVersion", "settings", "protectedStrings"})
-    public static ExtensionProfile create(final String name, final String publisher, final String typeHandlerVersion,
+    public static ExtensionProfile create(final String name, final String publisher, String type, final String typeHandlerVersion,
                                           final Boolean autoUpgradeMinorVersion, final ExtensionProfileSettings settings,
                                           final Map<String, String> protectedSettings) {
-        return new AutoValue_ExtensionProfile(name, publisher, typeHandlerVersion, autoUpgradeMinorVersion, settings, protectedSettings);
+        return new AutoValue_ExtensionProfile(name, publisher, type, typeHandlerVersion, autoUpgradeMinorVersion, settings, protectedSettings);
     }
 }
 //      ExtensionProfile.Builder builder = ExtensionProfile.builder()
