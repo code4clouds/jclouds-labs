@@ -29,7 +29,6 @@ public abstract class VirtualMachineScaleSetIpConfigurationProperties {
     @Nullable
     public abstract VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration();
 
-    @Nullable
     public abstract IdReference subnet();
 
     @Nullable
