@@ -19,33 +19,43 @@ package org.jclouds.azurecompute.arm.features;
 import com.google.common.collect.ImmutableMap;
 import com.sun.media.jfxmedia.logging.Logger;
 import org.jclouds.azurecompute.arm.domain.DataDisk;
-import org.jclouds.azurecompute.arm.domain.VirtualMachineInstance.PowerState;
-import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSet;
-import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetSKU;
-import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetUpgradePolicy;
-import org.jclouds.azurecompute.arm.domain.StorageProfile;
-import org.jclouds.azurecompute.arm.domain.ManagedDiskParameters;
-import org.jclouds.azurecompute.arm.domain.OSDisk;
-import org.jclouds.azurecompute.arm.domain.ImageReference;
-import org.jclouds.azurecompute.arm.domain.OSProfile;
-import org.jclouds.azurecompute.arm.domain.NetworkProfile;
+import org.jclouds.azurecompute.arm.domain.Extension;
 import org.jclouds.azurecompute.arm.domain.ExtensionProfile;
 import org.jclouds.azurecompute.arm.domain.ExtensionProfileSettings;
-import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetVirtualMachineProfile;
-import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetProperties;
-import org.jclouds.azurecompute.arm.domain.Subnet;
+import org.jclouds.azurecompute.arm.domain.ExtensionProperties;
+import org.jclouds.azurecompute.arm.domain.IdReference;
+import org.jclouds.azurecompute.arm.domain.ImageReference;
+import org.jclouds.azurecompute.arm.domain.IpConfiguration;
+import org.jclouds.azurecompute.arm.domain.IpConfigurationProperties;
+import org.jclouds.azurecompute.arm.domain.ManagedDiskParameters;
 import org.jclouds.azurecompute.arm.domain.NetworkInterfaceCard;
 import org.jclouds.azurecompute.arm.domain.NetworkInterfaceCardProperties;
-import org.jclouds.azurecompute.arm.domain.IpConfiguration;
-import org.jclouds.azurecompute.arm.domain.IdReference;
-import org.jclouds.azurecompute.arm.domain.IpConfigurationProperties;
-import org.jclouds.azurecompute.arm.domain.Extension;
-import org.jclouds.azurecompute.arm.domain.ExtensionProperties;
+import org.jclouds.azurecompute.arm.domain.NetworkInterfaceConfiguration;
+import org.jclouds.azurecompute.arm.domain.NetworkInterfaceConfigurationProperties;
+import org.jclouds.azurecompute.arm.domain.NetworkProfile;
+import org.jclouds.azurecompute.arm.domain.OSDisk;
+import org.jclouds.azurecompute.arm.domain.StorageProfile;
+import org.jclouds.azurecompute.arm.domain.Subnet;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineInstance.PowerState;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSet;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetDNSSettings;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetIpConfiguration;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetIpConfigurationProperties;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetNetworkProfile;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetNetworkSecurityGroup;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetOSProfile;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetProperties;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetPublicIPAddressConfiguration;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetPublicIPAddressProperties;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetSKU;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetUpgradePolicy;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetVirtualMachineProfile;
 import org.jclouds.azurecompute.arm.internal.BaseAzureComputeApiLiveTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -68,6 +78,7 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
     private String nicName;
     private String virtualNetworkName;
     private String subnetId;
+    private Subnet subnet;
 
     @BeforeClass
     @Override
@@ -84,11 +95,10 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
 
         //Subnet needs to be up & running before NIC can be created
         String subnetName = String.format("s-%s-%s", this.getClass().getSimpleName().toLowerCase(), System.getProperty("user.name"));
-        Subnet subnet = createDefaultSubnet(resourceGroupName, subnetName, virtualNetworkName, "10.2.0.0/23");
+        this.subnet = createDefaultSubnet(resourceGroupName, subnetName, virtualNetworkName, "10.2.0.0/23");
         assertNotNull(subnet);
         assertNotNull(subnet.id());
-        subnetId = subnet.id();
-
+        this.subnetId = subnet.id();
 
 
         vmssName = String.format("%3.24s", System.getProperty("user.name") + RAND + this.getClass().getSimpleName()).toLowerCase().substring(0, 15);
@@ -97,10 +107,10 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
 
     @Test
     public void testCreate() {
-//        VirtualMachineScaleSet vmss = api().createOrUpdate(vmssName, LOCATIONDESCRIPTION, getSKU(),
-//                Collections.<String, String>emptyMap(), getProperties());
-//        assertTrue(!vmss.name().isEmpty());
-//        waitUntilReady(vmssName);
+        VirtualMachineScaleSet vmss = api().createOrUpdate(vmssName, LOCATIONDESCRIPTION, getSKU(),
+                Collections.<String, String>emptyMap(), getProperties());
+        assertTrue(!vmss.name().isEmpty());
+        waitUntilReady(vmssName);
     }
 
     private VirtualMachineScaleSetApi api() {
@@ -159,12 +169,12 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
 
     private OSDisk getWindowsOSDisk() {
         return OSDisk.create("Windows", null, null, null, "FromImage",
-                null, getManagedDiskParameters(),  null);
+                null, getManagedDiskParameters(), null);
     }
 
     private OSDisk getLinuxOSDisk() {
         return OSDisk.create("Linux", null, null, null, "FromImage",
-                null, getManagedDiskParameters(),  null);
+                null, getManagedDiskParameters(), null);
     }
 
     private ImageReference getWindowsImageReference() {
@@ -177,24 +187,82 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
                 "16.04-LTS", "latest");
     }
 
-    private OSProfile getOSProfile() {
-        OSProfile.LinuxConfiguration linuxConfiguration =
-                OSProfile.LinuxConfiguration.create("False", null);
-        OSProfile.WindowsConfiguration windowsConfiguration =
-                OSProfile.WindowsConfiguration.create(true, null, null, true);
+    private VirtualMachineScaleSetOSProfile getOSProfile() {
+        VirtualMachineScaleSetOSProfile.LinuxConfiguration linuxConfiguration =
+                VirtualMachineScaleSetOSProfile.LinuxConfiguration.create("False", null);
+        VirtualMachineScaleSetOSProfile.WindowsConfiguration windowsConfiguration = null;
+//                VirtualMachineScaleSetOSProfile.WindowsConfiguration.create(true, null, null, true);
 
-        return OSProfile.create(vmssName, "jclouds", "jClouds1!", null,
+        return VirtualMachineScaleSetOSProfile.create(vmssName, "jclouds", "jClouds1!",
                 linuxConfiguration, windowsConfiguration, null);
     }
 
-    private NetworkProfile getNetworkProfile() {
+
+    private VirtualMachineScaleSetNetworkProfile getNetworkProfile() {
         List<NetworkProfile.NetworkInterface> networkInterfacesList = new ArrayList<NetworkProfile.NetworkInterface>();
 
         NetworkInterfaceCard nic = createNetworkInterfaceCard(resourceGroupName, "jc-nic-" + RAND, LOCATION, "ipConfig-" + RAND);
         assertNotNull(nic);
         networkInterfacesList.add(NetworkProfile.NetworkInterface.create(nic.id(), NetworkProfile.NetworkInterface.NetworkInterfaceProperties.create(true)));
-        return NetworkProfile.create(networkInterfacesList);
+
+        List<NetworkInterfaceConfiguration> networkInterfaceConfigurations = new ArrayList<NetworkInterfaceConfiguration>();
+        List<VirtualMachineScaleSetIpConfiguration> virtualMachineScaleSetIpConfigurations = new ArrayList<VirtualMachineScaleSetIpConfiguration>();
+
+
+//        String name,
+//        VirtualMachineScaleSetPublicIPAddressProperties properties
+
+        VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration =
+                VirtualMachineScaleSetPublicIPAddressConfiguration.create("pub1", VirtualMachineScaleSetPublicIPAddressProperties.create(15));
+
+        /***
+         * final VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration,
+         final IdReference subnet,
+         final String privateIPAddressVersion,
+         final List<IdReference> loadBalancerBackendAddressPools,
+         final List<IdReference> loadBalancerInboundNatPools,
+         final String applicationGatewayBackendAddressPools)
+         */
+//        try {
+//            throw new Exception("subnet:" + this.subnetId);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+
+        VirtualMachineScaleSetIpConfigurationProperties virtualMachineScaleSetIpConfigurationProperties =
+                VirtualMachineScaleSetIpConfigurationProperties.create(publicIPAddressConfiguration,
+                        this.subnet, "IPv4",  null,
+                        null,null);
+        /***
+         * (final String name,
+         final VirtualMachineScaleSetIpConfigurationProperties properties
+         */
+        VirtualMachineScaleSetIpConfiguration virtualMachineScaleSetIpConfiguration =
+                VirtualMachineScaleSetIpConfiguration.create("ipconfig1", virtualMachineScaleSetIpConfigurationProperties);
+
+        virtualMachineScaleSetIpConfigurations.add(virtualMachineScaleSetIpConfiguration);
+
+        VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup = null;
+//                VirtualMachineScaleSetNetworkSecurityGroup.create(null);
+        /**
+         * final Boolean primary,
+         final Boolean enableAcceleratedNetworking,
+         final VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup,
+         final List<VirtualMachineScaleSetIpConfiguration> ipConfigurations
+         */
+        ArrayList<String> dnsList = new ArrayList<String>();
+        dnsList.add("8.8.8.8");
+        VirtualMachineScaleSetDNSSettings dnsSettings =  VirtualMachineScaleSetDNSSettings.create(dnsList);
+
+        NetworkInterfaceConfigurationProperties networkInterfaceConfigurationProperties =
+                NetworkInterfaceConfigurationProperties.create(true, false, networkSecurityGroup, dnsSettings, virtualMachineScaleSetIpConfigurations);
+        NetworkInterfaceConfiguration networkInterfaceConfiguration = NetworkInterfaceConfiguration.create("nicconfig1", networkInterfaceConfigurationProperties);
+        networkInterfaceConfigurations.add(networkInterfaceConfiguration);
+
+        return VirtualMachineScaleSetNetworkProfile.create(networkInterfaceConfigurations);
     }
+
 
     private ExtensionProfile getExtensionProfile() {
         List<Extension> extensions = new ArrayList<Extension>();
@@ -206,11 +274,11 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
         Map<String, String> protectedSettings = new HashMap<String, String>();
         protectedSettings.put("StorageAccountKey", "jclouds-accountkey");
 
-        ExtensionProperties extensionProperties = ExtensionProperties.create( "Microsoft.compute", "CustomScriptExtension",
+        ExtensionProperties extensionProperties = ExtensionProperties.create("Microsoft.compute", "CustomScriptExtension",
                 "1.1", false, extensionProfileSettings,
                 protectedSettings);
 
-        Extension extension = Extension.create("extensionName",  extensionProperties);
+        Extension extension = Extension.create("extensionName", extensionProperties);
         extensions.add(extension);
 
         return ExtensionProfile.create(extensions);

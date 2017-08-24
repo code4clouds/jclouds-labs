@@ -31,11 +31,11 @@ public abstract class VirtualMachineScaleSetNetworkSecurityGroup {
      * The name of the NetworkInterfaceConfiguration
      */
     @Nullable
-    public abstract VirtualMachineScaleSetDNSSettings dnsSettings();
+    public abstract String id();
 
     @SerializedNames({"dnsSettings"})
-    public static VirtualMachineScaleSetNetworkSecurityGroup create(final VirtualMachineScaleSetDNSSettings dnsSettings) {
+    public static VirtualMachineScaleSetNetworkSecurityGroup create(final String id) {
 
-        return new AutoValue_VirtualMachineScaleSetNetworkSecurityGroup(dnsSettings);
+        return new AutoValue_VirtualMachineScaleSetNetworkSecurityGroup(id);
     }
 }

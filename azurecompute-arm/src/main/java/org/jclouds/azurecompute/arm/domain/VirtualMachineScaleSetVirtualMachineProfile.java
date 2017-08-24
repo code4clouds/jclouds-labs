@@ -35,7 +35,7 @@ public abstract class VirtualMachineScaleSetVirtualMachineProfile {
     /**
      * The OS Profile of the virtual machine .
      */
-    public abstract OSProfile osProfile();
+    public abstract VirtualMachineScaleSetOSProfile osProfile();
 
     /**
      * The network profile of the VM
@@ -51,7 +51,7 @@ public abstract class VirtualMachineScaleSetVirtualMachineProfile {
 
     @SerializedNames({"storageProfile", "osProfile", "networkProfile", "extensionProfile"})
     public static VirtualMachineScaleSetVirtualMachineProfile create(final StorageProfile storageProfile,
-                                                                     final OSProfile osProfile,
+                                                                     final VirtualMachineScaleSetOSProfile osProfile,
                                                                      final VirtualMachineScaleSetNetworkProfile networkProfile,
                                                                      final ExtensionProfile extensionProfile) {
         return builder()
@@ -73,7 +73,7 @@ public abstract class VirtualMachineScaleSetVirtualMachineProfile {
 
         public abstract Builder storageProfile(StorageProfile storageProfile);
 
-        public abstract Builder osProfile(OSProfile osProfile);
+        public abstract Builder osProfile(VirtualMachineScaleSetOSProfile osProfile);
 
         public abstract Builder networkProfile(VirtualMachineScaleSetNetworkProfile networkProfile);
 

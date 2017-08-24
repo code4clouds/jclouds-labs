@@ -29,7 +29,7 @@ public abstract class VirtualMachineScaleSetIpConfigurationProperties {
     @Nullable
     public abstract VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration();
 
-    public abstract IdReference subnet();
+    public abstract Subnet subnet();
 
     @Nullable
     public abstract String privateIPAddressVersion();
@@ -46,7 +46,7 @@ public abstract class VirtualMachineScaleSetIpConfigurationProperties {
     @SerializedNames({"publicIPAddressConfiguration", "subnet", "privateIPAddressVersion", "loadBalancerBackendAddressPools",
             "loadBalancerInboundNatPools", "applicationGatewayBackendAddressPools"})
     public static VirtualMachineScaleSetIpConfigurationProperties create(final VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration,
-                                                                         final IdReference subnet,
+                                                                         final Subnet subnet,
                                                                          final String privateIPAddressVersion,
                                                                          final List<IdReference> loadBalancerBackendAddressPools,
                                                                          final List<IdReference> loadBalancerInboundNatPools,
@@ -74,7 +74,7 @@ public abstract class VirtualMachineScaleSetIpConfigurationProperties {
     public abstract static class Builder {
         public abstract Builder publicIPAddressConfiguration(VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration);
 
-        public abstract Builder subnet(IdReference subnet);
+        public abstract Builder subnet(Subnet subnet);
 
         public abstract Builder privateIPAddressVersion(String privateIPAddressVersion);
 

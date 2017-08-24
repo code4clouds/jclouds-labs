@@ -26,7 +26,7 @@ import java.util.List;
  * NetworkInterfaceConfigurationProperty
  */
 @AutoValue
-public abstract class NetworkInterfaceConfigurationProperty {
+public abstract class NetworkInterfaceConfigurationProperties {
     /**
      * The primary of the NetworkInterfaceConfigurationProperties
      */
@@ -46,19 +46,26 @@ public abstract class NetworkInterfaceConfigurationProperty {
     public abstract VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup();
 
     /**
+     * The dnsSettings of the VirtualMachineScaleSetDNSSettings
+     */
+    @Nullable
+    public abstract VirtualMachineScaleSetDNSSettings dnsSettings();
+
+    /**
      * The ipConfigurations of the NetworkInterfaceConfigurationProperties
      */
     @Nullable
     public abstract List<VirtualMachineScaleSetIpConfiguration> ipConfigurations();
 
 
-    @SerializedNames({"primary", "enableAcceleratedNetworking", "networkSecurityGroup", "ipConfigurations"})
-    public static NetworkInterfaceConfigurationProperty create(final Boolean primary,
+    @SerializedNames({"primary", "enableAcceleratedNetworking", "networkSecurityGroup", "dnsSettings", "ipConfigurations"})
+    public static NetworkInterfaceConfigurationProperties create(final Boolean primary,
                                                                final Boolean enableAcceleratedNetworking,
                                                                final VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup,
+                                                               final VirtualMachineScaleSetDNSSettings dnsSettings,
                                                                final List<VirtualMachineScaleSetIpConfiguration> ipConfigurations) {
 
-        return new AutoValue_NetworkInterfaceConfigurationProperty(primary, enableAcceleratedNetworking,
-                networkSecurityGroup, ipConfigurations);
+        return new AutoValue_NetworkInterfaceConfigurationProperties(primary, enableAcceleratedNetworking,
+                networkSecurityGroup, dnsSettings, ipConfigurations);
     }
 }

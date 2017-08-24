@@ -53,7 +53,8 @@ public abstract class VirtualMachineScaleSetProperties {
     public abstract VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile();
 
     @SerializedNames({"singlePlacementGroup", "overProvision", "upgradePolicy", "virtualMachineProfile"})
-    public static VirtualMachineScaleSetProperties create(final Boolean singlePlacementGroup, final Boolean overProvision,
+    public static VirtualMachineScaleSetProperties create(final Boolean singlePlacementGroup,
+                                                          final Boolean overProvision,
                                                           final VirtualMachineScaleSetUpgradePolicy upgradePolicy,
                                                           final VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile) {
 
