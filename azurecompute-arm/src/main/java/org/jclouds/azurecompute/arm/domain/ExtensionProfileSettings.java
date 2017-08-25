@@ -21,7 +21,6 @@ import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
 import java.util.List;
-import java.util.Map;
 
 @AutoValue
 public abstract class ExtensionProfileSettings {
@@ -42,36 +41,3 @@ public abstract class ExtensionProfileSettings {
         return new AutoValue_ExtensionProfileSettings(fileUris, commandToExecute);
     }
 }
-//      ExtensionProfile.Builder builder = ExtensionProfile.builder()
-//              .imageReference(imageReference)
-//              .osDisk(osDisk)
-//              .dataDisks(dataDisks != null ? ImmutableList.copyOf(dataDisks) : null);
-//
-//      return builder.build();
-//   }
-
-//   public abstract Builder toBuilder();
-//
-//   public static Builder builder() {
-//      return new ExtensionProfile.Builder();
-//   }
-//
-//   @AutoValue.Builder
-//   public abstract static class Builder {
-//      public abstract Builder imageReference(ImageReference imageReference);
-//
-//      public abstract Builder osDisk(OSDisk osDisk);
-//
-//      public abstract Builder dataDisks(List<DataDisk> dataDisks);
-//
-//      abstract List<DataDisk> dataDisks();
-//
-//      abstract ExtensionProfile autoBuild();
-//
-//      public ExtensionProfile build() {
-//         dataDisks(dataDisks() != null ? ImmutableList.copyOf(dataDisks()) : null);
-//         return autoBuild();
-//      }
-//   }
-//
-//}

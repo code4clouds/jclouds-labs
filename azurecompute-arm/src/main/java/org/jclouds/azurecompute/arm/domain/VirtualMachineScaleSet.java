@@ -17,16 +17,12 @@
 
 package org.jclouds.azurecompute.arm.domain;
 
-import java.util.List;
-import java.util.Map;
-
-import com.sun.media.jfxmedia.events.BufferListener;
+import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableMap;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
-import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import java.util.Map;
 
 /**
  * VirtualMachineScaleSet for subscription
@@ -76,7 +72,7 @@ public abstract class VirtualMachineScaleSet {
     @Nullable
     public abstract VirtualMachineScaleSetProperties properties();
 
-    @SerializedNames({  "id", "name", "location","sku", "tags", "plan", "properties"})
+    @SerializedNames({  "id", "name", "location", "sku", "tags", "plan", "properties"})
     public static VirtualMachineScaleSet create(final String id, final String name, final String location,
                                                 VirtualMachineScaleSetSKU sku, final Map<String, String> tags,
                                                 VirtualMachineScaleSetPlan plan,

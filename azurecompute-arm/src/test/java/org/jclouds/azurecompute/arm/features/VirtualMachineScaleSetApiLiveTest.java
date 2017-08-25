@@ -53,9 +53,7 @@ import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetVirtualMachineP
 import org.jclouds.azurecompute.arm.internal.BaseAzureComputeApiLiveTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,11 +61,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Arrays;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.jclouds.util.Predicates2.retry;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.assertEquals;
 
 @Test(groups = "live", testName = "VirtualMachineApiLiveTest")
 public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTest {
@@ -119,8 +114,13 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
     }
 
     private boolean waitForState(String name, final PowerState state) {
-        throw new NotImplementedException();
+        try {
+            throw new Exception("Not Implemented");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        return api().getInstanceDetails(name).powerState().equals(state);
+        return false;
     }
 
     private void waitUntilReady(String vmssName) {
@@ -232,8 +232,8 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
 
         VirtualMachineScaleSetIpConfigurationProperties virtualMachineScaleSetIpConfigurationProperties =
                 VirtualMachineScaleSetIpConfigurationProperties.create(publicIPAddressConfiguration,
-                        this.subnet, "IPv4",  null,
-                        null,null);
+                        this.subnet, "IPv4", null,
+                        null, null);
         /***
          * (final String name,
          final VirtualMachineScaleSetIpConfigurationProperties properties

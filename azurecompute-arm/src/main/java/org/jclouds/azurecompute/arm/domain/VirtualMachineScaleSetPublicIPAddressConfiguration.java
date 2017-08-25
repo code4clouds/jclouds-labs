@@ -18,11 +18,7 @@
 package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableMap;
-import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
-
-import java.util.Map;
 
 @AutoValue
 public abstract class VirtualMachineScaleSetPublicIPAddressConfiguration {

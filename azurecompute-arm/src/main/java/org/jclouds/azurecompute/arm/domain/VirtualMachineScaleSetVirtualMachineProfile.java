@@ -17,8 +17,6 @@
 package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
-import org.jclouds.azurecompute.arm.util.GetEnumValue;
-import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
 /**
