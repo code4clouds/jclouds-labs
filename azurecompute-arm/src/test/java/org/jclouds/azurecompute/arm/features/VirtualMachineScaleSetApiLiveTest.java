@@ -36,7 +36,6 @@ import org.jclouds.azurecompute.arm.domain.NetworkProfile;
 import org.jclouds.azurecompute.arm.domain.OSDisk;
 import org.jclouds.azurecompute.arm.domain.StorageProfile;
 import org.jclouds.azurecompute.arm.domain.Subnet;
-import org.jclouds.azurecompute.arm.domain.VirtualMachineInstance.PowerState;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSet;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetDNSSettings;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetIpConfiguration;
@@ -64,7 +63,7 @@ import java.util.Arrays;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-@Test(groups = "live", testName = "VirtualMachineApiLiveTest")
+@Test(groups = "live", testName = "VirtualMachineScaleSetApiLiveTest")
 public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTest {
 
     private String subscriptionid;
@@ -105,25 +104,11 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
         VirtualMachineScaleSet vmss = api().createOrUpdate(vmssName, LOCATIONDESCRIPTION, getSKU(),
                 Collections.<String, String>emptyMap(), getProperties());
         assertTrue(!vmss.name().isEmpty());
-        waitUntilReady(vmssName);
     }
 
     private VirtualMachineScaleSetApi api() {
         Logger.logMsg(Logger.INFO, "resourceGroupName: " + resourceGroupName);
         return api.getVirtualMachineScaleSetApi(resourceGroupName);
-    }
-
-    private boolean waitForState(String name, final PowerState state) {
-        try {
-            throw new Exception("Not Implemented");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        return api().getInstanceDetails(name).powerState().equals(state);
-        return false;
-    }
-
-    private void waitUntilReady(String vmssName) {
     }
 
 
@@ -191,7 +176,6 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
         VirtualMachineScaleSetOSProfile.LinuxConfiguration linuxConfiguration =
                 VirtualMachineScaleSetOSProfile.LinuxConfiguration.create("False", null);
         VirtualMachineScaleSetOSProfile.WindowsConfiguration windowsConfiguration = null;
-//                VirtualMachineScaleSetOSProfile.WindowsConfiguration.create(true, null, null, true);
 
         return VirtualMachineScaleSetOSProfile.create(vmssName, "jclouds", "jClouds1!",
                 linuxConfiguration, windowsConfiguration, null);
@@ -209,48 +193,22 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
         List<VirtualMachineScaleSetIpConfiguration> virtualMachineScaleSetIpConfigurations = new ArrayList<VirtualMachineScaleSetIpConfiguration>();
 
 
-//        String name,
-//        VirtualMachineScaleSetPublicIPAddressProperties properties
-
         VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration =
                 VirtualMachineScaleSetPublicIPAddressConfiguration.create("pub1", VirtualMachineScaleSetPublicIPAddressProperties.create(15));
-
-        /***
-         * final VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration,
-         final IdReference subnet,
-         final String privateIPAddressVersion,
-         final List<IdReference> loadBalancerBackendAddressPools,
-         final List<IdReference> loadBalancerInboundNatPools,
-         final String applicationGatewayBackendAddressPools)
-         */
-//        try {
-//            throw new Exception("subnet:" + this.subnetId);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
 
         VirtualMachineScaleSetIpConfigurationProperties virtualMachineScaleSetIpConfigurationProperties =
                 VirtualMachineScaleSetIpConfigurationProperties.create(publicIPAddressConfiguration,
                         this.subnet, "IPv4", null,
                         null, null);
-        /***
-         * (final String name,
-         final VirtualMachineScaleSetIpConfigurationProperties properties
-         */
+
         VirtualMachineScaleSetIpConfiguration virtualMachineScaleSetIpConfiguration =
                 VirtualMachineScaleSetIpConfiguration.create("ipconfig1", virtualMachineScaleSetIpConfigurationProperties);
 
         virtualMachineScaleSetIpConfigurations.add(virtualMachineScaleSetIpConfiguration);
 
         VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup = null;
-//                VirtualMachineScaleSetNetworkSecurityGroup.create(null);
-        /**
-         * final Boolean primary,
-         final Boolean enableAcceleratedNetworking,
-         final VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup,
-         final List<VirtualMachineScaleSetIpConfiguration> ipConfigurations
-         */
+
         ArrayList<String> dnsList = new ArrayList<String>();
         dnsList.add("8.8.8.8");
         VirtualMachineScaleSetDNSSettings dnsSettings =  VirtualMachineScaleSetDNSSettings.create(dnsList);
