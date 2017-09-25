@@ -76,10 +76,6 @@ public class BaseAzureComputeApiMockTest {
    protected Properties setupProperties() {
       Properties properties = new Properties();
 
-      properties.setProperty(org.jclouds.Constants.PROPERTY_PROXY_HOST, "localhost");
-      properties.setProperty(org.jclouds.Constants.PROPERTY_PROXY_PORT, "8888");
-      properties.setProperty(org.jclouds.Constants.PROPERTY_TRUST_ALL_CERTS, "true");
-
       properties.put(CREDENTIAL_TYPE, BEARER_TOKEN_CREDENTIALS.toString());
       properties.put("oauth.endpoint", "https://login.microsoftonline.com/tenant-id/oauth2/token");
       return properties;

@@ -17,7 +17,6 @@
 package org.jclouds.azurecompute.arm.features;
 
 import com.google.common.collect.ImmutableMap;
-import com.sun.media.jfxmedia.logging.Logger;
 import org.jclouds.azurecompute.arm.domain.DataDisk;
 import org.jclouds.azurecompute.arm.domain.Extension;
 import org.jclouds.azurecompute.arm.domain.ExtensionProfile;
@@ -96,7 +95,6 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
 
 
         vmssName = String.format("%3.24s", System.getProperty("user.name") + RAND + this.getClass().getSimpleName()).toLowerCase().substring(0, 15);
-        Logger.logMsg(Logger.INFO, "vmssName: " + vmssName);
     }
 
     @Test
@@ -107,7 +105,6 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
     }
 
     private VirtualMachineScaleSetApi api() {
-        Logger.logMsg(Logger.INFO, "resourceGroupName: " + resourceGroupName);
         return api.getVirtualMachineScaleSetApi(resourceGroupName);
     }
 
