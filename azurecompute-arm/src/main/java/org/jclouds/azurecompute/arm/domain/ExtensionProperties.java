@@ -63,36 +63,4 @@ public abstract class ExtensionProperties {
         return new AutoValue_ExtensionProperties(publisher, type, typeHandlerVersion, autoUpgradeMinorVersion, settings, protectedSettings);
     }
 }
-//      ExtensionProfile.Builder builder = ExtensionProfile.builder()
-//              .imageReference(imageReference)
-//              .osDisk(osDisk)
-//              .dataDisks(dataDisks != null ? ImmutableList.copyOf(dataDisks) : null);
-//
-//      return builder.build();
-//   }
 
-//   public abstract Builder toBuilder();
-//
-//   public static Builder builder() {
-//      return new ExtensionProfile.Builder();
-//   }
-//
-//   @AutoValue.Builder
-//   public abstract static class Builder {
-//      public abstract Builder imageReference(ImageReference imageReference);
-//
-//      public abstract Builder osDisk(OSDisk osDisk);
-//
-//      public abstract Builder dataDisks(List<DataDisk> dataDisks);
-//
-//      abstract List<DataDisk> dataDisks();
-//
-//      abstract ExtensionProfile autoBuild();
-//
-//      public ExtensionProfile build() {
-//         dataDisks(dataDisks() != null ? ImmutableList.copyOf(dataDisks()) : null);
-//         return autoBuild();
-//      }
-//   }
-//
-//}
