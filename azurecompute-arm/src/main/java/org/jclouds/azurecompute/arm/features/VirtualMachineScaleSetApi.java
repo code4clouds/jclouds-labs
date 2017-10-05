@@ -56,33 +56,33 @@ import java.util.Map;
 @Consumes(MediaType.APPLICATION_JSON)
 public interface VirtualMachineScaleSetApi extends Closeable {
 
-    @Named("virtualmachinescaleset:list")
-    @GET
-    @SelectJson("value")
-    @Fallback(EmptyListOnNotFoundOr404.class)
-    List<VirtualMachineScaleSet> list();
+   @Named("virtualmachinescaleset:list")
+   @GET
+   @SelectJson("value")
+   @Fallback(EmptyListOnNotFoundOr404.class)
+   List<VirtualMachineScaleSet> list();
 
-    @Named("virtualmachinescaleset:get")
-    @Path("/{name}")
-    @GET
-    @Fallback(NullOnNotFoundOr404.class)
-    VirtualMachineScaleSet get(@PathParam("name") String name);
+   @Named("virtualmachinescaleset:get")
+   @Path("/{name}")
+   @GET
+   @Fallback(NullOnNotFoundOr404.class)
+   VirtualMachineScaleSet get(@PathParam("name") String name);
 
-    @Named("virtualmachinescaleset:createOrUpdate")
-    @MapBinder(BindToJsonPayload.class)
-    @Path("/{name}")
-    @PUT
-    VirtualMachineScaleSet createOrUpdate(@PathParam("name") String name,
-                                          @PayloadParam("location") String location,
-                                          @PayloadParam("sku") VirtualMachineScaleSetSKU sku,
-                                          @Nullable @PayloadParam("tags") Map<String, String> tags,
-                                          @PayloadParam("properties") VirtualMachineScaleSetProperties properties);
+   @Named("virtualmachinescaleset:createOrUpdate")
+   @MapBinder(BindToJsonPayload.class)
+   @Path("/{name}")
+   @PUT
+   VirtualMachineScaleSet createOrUpdate(@PathParam("name") String name,
+                                         @PayloadParam("location") String location,
+                                         @PayloadParam("sku") VirtualMachineScaleSetSKU sku,
+                                         @Nullable @PayloadParam("tags") Map<String, String> tags,
+                                         @PayloadParam("properties") VirtualMachineScaleSetProperties properties);
 
-    @Named("virtualmachinescaleset:delete")
-    @Path("/{name}")
-    @DELETE
-    @ResponseParser(URIParser.class)
-    @Fallback(NullOnNotFoundOr404.class)
-    URI delete(@PathParam("name") String name);
+   @Named("virtualmachinescaleset:delete")
+   @Path("/{name}")
+   @DELETE
+   @ResponseParser(URIParser.class)
+   @Fallback(NullOnNotFoundOr404.class)
+   URI delete(@PathParam("name") String name);
 
 }

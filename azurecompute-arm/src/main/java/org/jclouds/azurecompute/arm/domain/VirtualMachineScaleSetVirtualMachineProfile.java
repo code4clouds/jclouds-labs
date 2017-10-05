@@ -25,58 +25,59 @@ import org.jclouds.json.SerializedNames;
 @AutoValue
 public abstract class VirtualMachineScaleSetVirtualMachineProfile {
 
-    /**
-     * The Storage Profile of the virtual machine .
-     */
-    public abstract StorageProfile storageProfile();
+   /**
+    * The storage profile of the Virtual Machine Scale Set Virtual Machine Profile.
+    */
+   public abstract StorageProfile storageProfile();
 
-    /**
-     * The OS Profile of the virtual machine .
-     */
-    public abstract VirtualMachineScaleSetOSProfile osProfile();
+   /**
+    * The OS profile of the Virtual Machine Scale Set Virtual Machine Profile.
+    */
+   public abstract VirtualMachineScaleSetOSProfile osProfile();
 
-    /**
-     * The network profile of the VM
-     */
-    public abstract VirtualMachineScaleSetNetworkProfile networkProfile();
+   /**
+    * The network profile of the Virtual Machine Scale Set Virtual Machine Profile
+    */
+   public abstract VirtualMachineScaleSetNetworkProfile networkProfile();
 
-    /**
-     * The OS Extension of the virtual machine .
-     */
-    public abstract ExtensionProfile extensionProfile();
+   /**
+    * The extension profile of the Virtual Machine Scale Set Virtual Machine Profile .
+    */
+   public abstract ExtensionProfile extensionProfile();
 
 
 
-    @SerializedNames({"storageProfile", "osProfile", "networkProfile", "extensionProfile"})
-    public static VirtualMachineScaleSetVirtualMachineProfile create(final StorageProfile storageProfile,
-                                                                     final VirtualMachineScaleSetOSProfile osProfile,
-                                                                     final VirtualMachineScaleSetNetworkProfile networkProfile,
-                                                                     final ExtensionProfile extensionProfile) {
-        return builder()
-                .storageProfile(storageProfile)
-                .osProfile(osProfile)
-                .networkProfile(networkProfile)
-                .extensionProfile(extensionProfile)
-                .build();
-    }
+   @SerializedNames({"storageProfile", "osProfile", "networkProfile", "extensionProfile"})
+   public static VirtualMachineScaleSetVirtualMachineProfile create(
+      final StorageProfile storageProfile,
+      final VirtualMachineScaleSetOSProfile osProfile,
+      final VirtualMachineScaleSetNetworkProfile networkProfile,
+      final ExtensionProfile extensionProfile) {
+         return builder()
+            .storageProfile(storageProfile)
+            .osProfile(osProfile)
+            .networkProfile(networkProfile)
+            .extensionProfile(extensionProfile)
+            .build();
+   }
 
-    public abstract Builder toBuilder();
+   public abstract Builder toBuilder();
 
-    public static Builder builder() {
-        return new AutoValue_VirtualMachineScaleSetVirtualMachineProfile.Builder();
-    }
+   public static Builder builder() {
+      return new AutoValue_VirtualMachineScaleSetVirtualMachineProfile.Builder();
+   }
 
-    @AutoValue.Builder
-    public abstract static class Builder {
+   @AutoValue.Builder
+   public abstract static class Builder {
 
-        public abstract Builder storageProfile(StorageProfile storageProfile);
+      public abstract Builder storageProfile(StorageProfile storageProfile);
 
-        public abstract Builder osProfile(VirtualMachineScaleSetOSProfile osProfile);
+      public abstract Builder osProfile(VirtualMachineScaleSetOSProfile osProfile);
 
-        public abstract Builder networkProfile(VirtualMachineScaleSetNetworkProfile networkProfile);
+      public abstract Builder networkProfile(VirtualMachineScaleSetNetworkProfile networkProfile);
 
-        public abstract Builder extensionProfile(ExtensionProfile extensionProfile);
+      public abstract Builder extensionProfile(ExtensionProfile extensionProfile);
 
-        public abstract VirtualMachineScaleSetVirtualMachineProfile build();
-    }
+      public abstract VirtualMachineScaleSetVirtualMachineProfile build();
+   }
 }

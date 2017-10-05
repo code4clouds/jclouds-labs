@@ -25,15 +25,15 @@ import org.jclouds.json.SerializedNames;
  */
 @AutoValue
 public abstract class VirtualMachineScaleSetUpgradePolicy {
-    /**
-     * The name of the SKU
-     */
-    @Nullable
-    public abstract String mode();
+   /**
+    * The name of the Virtual Machine Scale Set Upgrade Policy
+    */
+   @Nullable
+   public abstract String mode();
 
-    @SerializedNames({"mode"})
-    public static VirtualMachineScaleSetUpgradePolicy create(final String mode) {
+   @SerializedNames({"mode"})
+   public static VirtualMachineScaleSetUpgradePolicy create(final String mode) {
 
-        return new AutoValue_VirtualMachineScaleSetUpgradePolicy(mode);
-    }
+      return new AutoValue_VirtualMachineScaleSetUpgradePolicy(mode);
+   }
 }

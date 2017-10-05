@@ -21,19 +21,19 @@ import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
 /**
- * VirtualMachineScaleSetNetworkSecurityGroup
+ * Virtual Machine Scale Set Network Security Group
  */
 @AutoValue
 public abstract class VirtualMachineScaleSetNetworkSecurityGroup {
-    /**
-     * The name of the NetworkInterfaceConfiguration
-     */
-    @Nullable
-    public abstract String id();
+   /**
+    * The id of the Virtual Machine Scale Set Network Security Group
+    */
+   @Nullable
+   public abstract String id();
 
-    @SerializedNames({"dnsSettings"})
-    public static VirtualMachineScaleSetNetworkSecurityGroup create(final String id) {
+   @SerializedNames({"dnsSettings"})
+   public static VirtualMachineScaleSetNetworkSecurityGroup create(final String id) {
 
-        return new AutoValue_VirtualMachineScaleSetNetworkSecurityGroup(id);
-    }
+      return new AutoValue_VirtualMachineScaleSetNetworkSecurityGroup(id);
+   }
 }

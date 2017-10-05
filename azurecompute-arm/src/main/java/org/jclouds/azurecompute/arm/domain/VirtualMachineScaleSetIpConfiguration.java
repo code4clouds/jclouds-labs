@@ -24,21 +24,28 @@ import org.jclouds.json.SerializedNames;
 @AutoValue
 public abstract class VirtualMachineScaleSetIpConfiguration {
 
+   /**
+    * The name of the Virtual Machine Scale Set Ip Configuration
+    */
    @Nullable
    public abstract String name();
 
+   /**
+    * The properties of the Virtual Machine Scale Set Ip Configuration
+    */
    @Nullable
    public abstract VirtualMachineScaleSetIpConfigurationProperties properties();
 
    @SerializedNames({"name", "properties"})
-   public static VirtualMachineScaleSetIpConfiguration create(final String name,
-                                                              final VirtualMachineScaleSetIpConfigurationProperties properties) {
+   public static VirtualMachineScaleSetIpConfiguration create(
+      final String name,
+      final VirtualMachineScaleSetIpConfigurationProperties properties) {
       return builder()
-              .name(name)
-              .properties(properties)
-              .build();
+         .name(name)
+         .properties(properties)
+         .build();
    }
-   
+
    public abstract Builder toBuilder();
 
    public static Builder builder() {

@@ -30,15 +30,22 @@ public abstract class VirtualMachineScaleSetOSProfile {
    @AutoValue
    public abstract static class LinuxConfiguration {
 
+
       @AutoValue
       public abstract static class SSH {
 
          @AutoValue
          public abstract static class SSHPublicKey {
 
+            /**
+             * The path for the SSH public key
+             */
             @Nullable
             public abstract String path();
 
+            /**
+             * The key data for the SSH public key
+             */
             @Nullable
             public abstract String keyData();
 
@@ -46,7 +53,7 @@ public abstract class VirtualMachineScaleSetOSProfile {
             public static SSHPublicKey create(final String path, final String keyData) {
 
                return new AutoValue_VirtualMachineScaleSetOSProfile_LinuxConfiguration_SSH_SSHPublicKey(
-                       path, keyData);
+                  path, keyData);
             }
          }
 
@@ -60,7 +67,7 @@ public abstract class VirtualMachineScaleSetOSProfile {
          public static SSH create(final List<SSHPublicKey> publicKeys) {
 
             return new AutoValue_VirtualMachineScaleSetOSProfile_LinuxConfiguration_SSH(
-                    publicKeys);
+               publicKeys);
          }
       }
 
@@ -80,7 +87,7 @@ public abstract class VirtualMachineScaleSetOSProfile {
                                               final SSH ssh) {
 
          return new AutoValue_VirtualMachineScaleSetOSProfile_LinuxConfiguration(disablePasswordAuthentication,
-                 ssh);
+            ssh);
       }
    }
 
@@ -89,43 +96,49 @@ public abstract class VirtualMachineScaleSetOSProfile {
 
       @AutoValue
       public abstract static class WinRM {
-          public enum Protocol {
+         public enum Protocol {
 
-              HTTP("http"),
-              HTTPS("https"),
-              UNRECOGNIZED("Unrecognized");
+            HTTP("http"),
+            HTTPS("https"),
+            UNRECOGNIZED("Unrecognized");
 
-              private String value;
+            private String value;
 
-              Protocol(String value) {
-                 this.value = value;
-              }
+            Protocol(String value) {
+               this.value = value;
+            }
 
-              public static Protocol fromValue(String value) {
-                  return (Protocol) GetEnumValue.fromValueOrDefault(value, Protocol.UNRECOGNIZED);
-              }
+            public static Protocol fromValue(String value) {
+               return (Protocol) GetEnumValue.fromValueOrDefault(value, Protocol.UNRECOGNIZED);
+            }
 
-              @Override
-              public String toString() {
-                 return this.value;
-              }
-           }
+            @Override
+            public String toString() {
+               return this.value;
+            }
+         }
 
-          @AutoValue
-          public abstract static class ProtocolListener {
+         @AutoValue
+         public abstract static class ProtocolListener {
 
-             public abstract Protocol protocol();
+            /**
+             * The protocol for the protcol listener
+             */
+            public abstract Protocol protocol();
 
-             @Nullable
-             public abstract String certificateUrl();
+            /**
+             * The certificate url or the protcol listener
+             */
+            @Nullable
+            public abstract String certificateUrl();
 
-             @SerializedNames({"protocol", "certificateUrl"})
-             public static ProtocolListener create(final Protocol protocol, final String certificateUrl) {
+            @SerializedNames({"protocol", "certificateUrl"})
+            public static ProtocolListener create(final Protocol protocol, final String certificateUrl) {
 
-                return new AutoValue_VirtualMachineScaleSetOSProfile_WindowsConfiguration_WinRM_ProtocolListener(
-                        protocol, certificateUrl);
-             }
-          }
+               return new AutoValue_VirtualMachineScaleSetOSProfile_WindowsConfiguration_WinRM_ProtocolListener(
+                  protocol, certificateUrl);
+            }
+         }
 
          /**
           * Map of different settings
@@ -155,7 +168,7 @@ public abstract class VirtualMachineScaleSetOSProfile {
                                                         final String content) {
 
             return new AutoValue_VirtualMachineScaleSetOSProfile_WindowsConfiguration_AdditionalUnattendContent(
-                    pass, component, settingName, content);
+               pass, component, settingName, content);
          }
       }
 
@@ -187,7 +200,7 @@ public abstract class VirtualMachineScaleSetOSProfile {
                                                 final boolean enableAutomaticUpdates) {
 
          return new AutoValue_VirtualMachineScaleSetOSProfile_WindowsConfiguration(provisionVMAgent, winRM,
-                 additionalUnattendContent, enableAutomaticUpdates);
+            additionalUnattendContent, enableAutomaticUpdates);
       }
    }
 
@@ -228,20 +241,20 @@ public abstract class VirtualMachineScaleSetOSProfile {
    public abstract List<Secrets> secrets();
 
    @SerializedNames({"computerNamePrefix", "adminUsername", "adminPassword", "linuxConfiguration",
-           "windowsConfiguration", "secrets"})
+      "windowsConfiguration", "secrets"})
    public static VirtualMachineScaleSetOSProfile create(final String computerNamePrefix, final String adminUsername,
                                                         final String adminPassword, final LinuxConfiguration linuxConfiguration,
                                                         final WindowsConfiguration windowsConfiguration, final List<Secrets> secrets) {
       return builder()
-              .computerNamePrefix(computerNamePrefix)
-              .adminUsername(adminUsername)
-              .adminPassword(adminPassword)
-              .linuxConfiguration(linuxConfiguration)
-              .windowsConfiguration(windowsConfiguration)
-              .secrets(secrets)
-              .build();
+         .computerNamePrefix(computerNamePrefix)
+         .adminUsername(adminUsername)
+         .adminPassword(adminPassword)
+         .linuxConfiguration(linuxConfiguration)
+         .windowsConfiguration(windowsConfiguration)
+         .secrets(secrets)
+         .build();
    }
-   
+
    public abstract Builder toBuilder();
 
    public static Builder builder() {

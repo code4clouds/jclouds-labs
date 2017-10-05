@@ -65,203 +65,203 @@ import static org.testng.Assert.assertTrue;
 @Test(groups = "live", testName = "VirtualMachineScaleSetApiLiveTest")
 public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTest {
 
-    private String subscriptionid;
-    private String vmssName;
-    private VirtualMachineScaleSetSKU SKU;
-    private String nicName;
-    private String virtualNetworkName;
-    private String subnetId;
-    private Subnet subnet;
+   private String subscriptionid;
+   private String vmssName;
+   private VirtualMachineScaleSetSKU SKU;
+   private String nicName;
+   private String virtualNetworkName;
+   private String subnetId;
+   private Subnet subnet;
 
-    @BeforeClass
-    @Override
-    public void setup() {
-        super.setup();
-        subscriptionid = getSubscriptionId();
+   @BeforeClass
+   @Override
+   public void setup() {
+      super.setup();
+      subscriptionid = getSubscriptionId();
 
-        createTestResourceGroup();  //BASE: Creates a random resource group using the properties location
+      createTestResourceGroup();  //BASE: Creates a random resource group using the properties location
 
-        virtualNetworkName = String.format("vn-%s-%s", this.getClass().getSimpleName().toLowerCase(), System.getProperty("user.name"));
+      virtualNetworkName = String.format("vn-%s-%s", this.getClass().getSimpleName().toLowerCase(), System.getProperty("user.name"));
 
-        // Subnets belong to a virtual network so that needs to be created first
-        assertNotNull(createDefaultVirtualNetwork(resourceGroupName, virtualNetworkName, "10.2.0.0/16", LOCATION));
+      // Subnets belong to a virtual network so that needs to be created first
+      assertNotNull(createDefaultVirtualNetwork(resourceGroupName, virtualNetworkName, "10.2.0.0/16", LOCATION));
 
-        //Subnet needs to be up & running before NIC can be created
-        String subnetName = String.format("s-%s-%s", this.getClass().getSimpleName().toLowerCase(), System.getProperty("user.name"));
-        this.subnet = createDefaultSubnet(resourceGroupName, subnetName, virtualNetworkName, "10.2.0.0/23");
-        assertNotNull(subnet);
-        assertNotNull(subnet.id());
-        this.subnetId = subnet.id();
-
-
-        vmssName = String.format("%3.24s", System.getProperty("user.name") + RAND + this.getClass().getSimpleName()).toLowerCase().substring(0, 15);
-    }
-
-    @Test
-    public void testCreate() {
-        VirtualMachineScaleSet vmss = api().createOrUpdate(vmssName, LOCATIONDESCRIPTION, getSKU(),
-                Collections.<String, String>emptyMap(), getProperties());
-        assertTrue(!vmss.name().isEmpty());
-    }
-
-    private VirtualMachineScaleSetApi api() {
-        return api.getVirtualMachineScaleSetApi(resourceGroupName);
-    }
+      //Subnet needs to be up & running before NIC can be created
+      String subnetName = String.format("s-%s-%s", this.getClass().getSimpleName().toLowerCase(), System.getProperty("user.name"));
+      this.subnet = createDefaultSubnet(resourceGroupName, subnetName, virtualNetworkName, "10.2.0.0/23");
+      assertNotNull(subnet);
+      assertNotNull(subnet.id());
+      this.subnetId = subnet.id();
 
 
-    /**
-     * Create a standard SKU
-     *
-     * @return VirtualMachineScaleSetSKU
-     */
-    public VirtualMachineScaleSetSKU getSKU() {
-        return VirtualMachineScaleSetSKU.create("Standard_A1", "Standard", 10);
-    }
+      vmssName = String.format("%3.24s", System.getProperty("user.name") + RAND + this.getClass().getSimpleName()).toLowerCase().substring(0, 15);
+   }
 
-    private VirtualMachineScaleSetUpgradePolicy getUpgradePolicy() {
-        return VirtualMachineScaleSetUpgradePolicy.create("Manual");
-    }
+   @Test
+   public void testCreate() {
+      VirtualMachineScaleSet vmss = api().createOrUpdate(vmssName, LOCATIONDESCRIPTION, getSKU(),
+         Collections.<String, String>emptyMap(), getProperties());
+      assertTrue(!vmss.name().isEmpty());
+   }
 
-    private List<DataDisk> getDataDisks() {
-        List<DataDisk> datadisks = new ArrayList<DataDisk>();
-
-        datadisks.add(DataDisk.create(null, "10", 1, null,
-                null, "FromImage",
-                "None", getManagedDiskParameters(),
-                null));
-
-        return datadisks;
-    }
-
-    private StorageProfile getStorageProfile() {
-        return StorageProfile.create(getWindowsImageReference(), getWindowsOSDisk(), getDataDisks());
-    }
-
-    private StorageProfile getWindowsStorageProfile_Default() {
-        return StorageProfile.create(getWindowsImageReference(), getWindowsOSDisk(), null);
-    }
-
-    private StorageProfile getLinuxStorageProfile_Default() {
-        return StorageProfile.create(getLinuxImageReference(), getLinuxOSDisk(), null);
-    }
-
-    private ManagedDiskParameters getManagedDiskParameters() {
-        return ManagedDiskParameters.create(null, "Standard_LRS");
-    }
-
-    private OSDisk getWindowsOSDisk() {
-        return OSDisk.create("Windows", null, null, null, "FromImage",
-                null, getManagedDiskParameters(), null);
-    }
-
-    private OSDisk getLinuxOSDisk() {
-        return OSDisk.create("Linux", null, null, null, "FromImage",
-                null, getManagedDiskParameters(), null);
-    }
-
-    private ImageReference getWindowsImageReference() {
-        return ImageReference.create(null, "Microsoft.Windows", "Windows2016",
-                "Enterprise", "latest");
-    }
-
-    private ImageReference getLinuxImageReference() {
-        return ImageReference.create(null, "Canonical", "UbuntuServer",
-                "16.04-LTS", "latest");
-    }
-
-    private VirtualMachineScaleSetOSProfile getOSProfile() {
-        VirtualMachineScaleSetOSProfile.LinuxConfiguration linuxConfiguration =
-                VirtualMachineScaleSetOSProfile.LinuxConfiguration.create("False", null);
-        VirtualMachineScaleSetOSProfile.WindowsConfiguration windowsConfiguration = null;
-
-        return VirtualMachineScaleSetOSProfile.create(vmssName, "jclouds", "jClouds1!",
-                linuxConfiguration, windowsConfiguration, null);
-    }
+   private VirtualMachineScaleSetApi api() {
+      return api.getVirtualMachineScaleSetApi(resourceGroupName);
+   }
 
 
-    private VirtualMachineScaleSetNetworkProfile getNetworkProfile() {
-        List<NetworkProfile.NetworkInterface> networkInterfacesList = new ArrayList<NetworkProfile.NetworkInterface>();
+   /**
+    * Create a standard SKU
+    *
+    * @return VirtualMachineScaleSetSKU
+    */
+   public VirtualMachineScaleSetSKU getSKU() {
+      return VirtualMachineScaleSetSKU.create("Standard_A1", "Standard", 10);
+   }
 
-        NetworkInterfaceCard nic = createNetworkInterfaceCard(resourceGroupName, "jc-nic-" + RAND, LOCATION, "ipConfig-" + RAND);
-        assertNotNull(nic);
-        networkInterfacesList.add(NetworkProfile.NetworkInterface.create(nic.id(), NetworkProfile.NetworkInterface.NetworkInterfaceProperties.create(true)));
+   private VirtualMachineScaleSetUpgradePolicy getUpgradePolicy() {
+      return VirtualMachineScaleSetUpgradePolicy.create("Manual");
+   }
 
-        List<NetworkInterfaceConfiguration> networkInterfaceConfigurations = new ArrayList<NetworkInterfaceConfiguration>();
-        List<VirtualMachineScaleSetIpConfiguration> virtualMachineScaleSetIpConfigurations = new ArrayList<VirtualMachineScaleSetIpConfiguration>();
+   private List<DataDisk> getDataDisks() {
+      List<DataDisk> datadisks = new ArrayList<DataDisk>();
+
+      datadisks.add(DataDisk.create(null, "10", 1, null,
+         null, "FromImage",
+         "None", getManagedDiskParameters(),
+         null));
+
+      return datadisks;
+   }
+
+   private StorageProfile getStorageProfile() {
+      return StorageProfile.create(getWindowsImageReference(), getWindowsOSDisk(), getDataDisks());
+   }
+
+   private StorageProfile getWindowsStorageProfile_Default() {
+      return StorageProfile.create(getWindowsImageReference(), getWindowsOSDisk(), null);
+   }
+
+   private StorageProfile getLinuxStorageProfile_Default() {
+      return StorageProfile.create(getLinuxImageReference(), getLinuxOSDisk(), null);
+   }
+
+   private ManagedDiskParameters getManagedDiskParameters() {
+      return ManagedDiskParameters.create(null, "Standard_LRS");
+   }
+
+   private OSDisk getWindowsOSDisk() {
+      return OSDisk.create("Windows", null, null, null, "FromImage",
+         null, getManagedDiskParameters(), null);
+   }
+
+   private OSDisk getLinuxOSDisk() {
+      return OSDisk.create("Linux", null, null, null, "FromImage",
+         null, getManagedDiskParameters(), null);
+   }
+
+   private ImageReference getWindowsImageReference() {
+      return ImageReference.create(null, "Microsoft.Windows", "Windows2016",
+         "Enterprise", "latest");
+   }
+
+   private ImageReference getLinuxImageReference() {
+      return ImageReference.create(null, "Canonical", "UbuntuServer",
+         "16.04-LTS", "latest");
+   }
+
+   private VirtualMachineScaleSetOSProfile getOSProfile() {
+      VirtualMachineScaleSetOSProfile.LinuxConfiguration linuxConfiguration =
+         VirtualMachineScaleSetOSProfile.LinuxConfiguration.create("False", null);
+      VirtualMachineScaleSetOSProfile.WindowsConfiguration windowsConfiguration = null;
+
+      return VirtualMachineScaleSetOSProfile.create(vmssName, "jclouds", "jClouds1!",
+         linuxConfiguration, windowsConfiguration, null);
+   }
 
 
-        VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration =
-                VirtualMachineScaleSetPublicIPAddressConfiguration.create("pub1", VirtualMachineScaleSetPublicIPAddressProperties.create(15));
+   private VirtualMachineScaleSetNetworkProfile getNetworkProfile() {
+      List<NetworkProfile.NetworkInterface> networkInterfacesList = new ArrayList<NetworkProfile.NetworkInterface>();
+
+      NetworkInterfaceCard nic = createNetworkInterfaceCard(resourceGroupName, "jc-nic-" + RAND, LOCATION, "ipConfig-" + RAND);
+      assertNotNull(nic);
+      networkInterfacesList.add(NetworkProfile.NetworkInterface.create(nic.id(), NetworkProfile.NetworkInterface.NetworkInterfaceProperties.create(true)));
+
+      List<NetworkInterfaceConfiguration> networkInterfaceConfigurations = new ArrayList<NetworkInterfaceConfiguration>();
+      List<VirtualMachineScaleSetIpConfiguration> virtualMachineScaleSetIpConfigurations = new ArrayList<VirtualMachineScaleSetIpConfiguration>();
 
 
-        VirtualMachineScaleSetIpConfigurationProperties virtualMachineScaleSetIpConfigurationProperties =
-                VirtualMachineScaleSetIpConfigurationProperties.create(publicIPAddressConfiguration,
-                        this.subnet, "IPv4", null,
-                        null, null);
-
-        VirtualMachineScaleSetIpConfiguration virtualMachineScaleSetIpConfiguration =
-                VirtualMachineScaleSetIpConfiguration.create("ipconfig1", virtualMachineScaleSetIpConfigurationProperties);
-
-        virtualMachineScaleSetIpConfigurations.add(virtualMachineScaleSetIpConfiguration);
-
-        VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup = null;
-
-        ArrayList<String> dnsList = new ArrayList<String>();
-        dnsList.add("8.8.8.8");
-        VirtualMachineScaleSetDNSSettings dnsSettings =  VirtualMachineScaleSetDNSSettings.create(dnsList);
-
-        NetworkInterfaceConfigurationProperties networkInterfaceConfigurationProperties =
-                NetworkInterfaceConfigurationProperties.create(true, false, networkSecurityGroup, dnsSettings, virtualMachineScaleSetIpConfigurations);
-        NetworkInterfaceConfiguration networkInterfaceConfiguration = NetworkInterfaceConfiguration.create("nicconfig1", networkInterfaceConfigurationProperties);
-        networkInterfaceConfigurations.add(networkInterfaceConfiguration);
-
-        return VirtualMachineScaleSetNetworkProfile.create(networkInterfaceConfigurations);
-    }
+      VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration =
+         VirtualMachineScaleSetPublicIPAddressConfiguration.create("pub1", VirtualMachineScaleSetPublicIPAddressProperties.create(15));
 
 
-    private ExtensionProfile getExtensionProfile() {
-        List<Extension> extensions = new ArrayList<Extension>();
+      VirtualMachineScaleSetIpConfigurationProperties virtualMachineScaleSetIpConfigurationProperties =
+         VirtualMachineScaleSetIpConfigurationProperties.create(publicIPAddressConfiguration,
+            this.subnet, "IPv4", null,
+            null, null);
 
-        List<String> uris = new ArrayList<String>();
-        uris.add("https://mystorage1.blob.core.windows.net/winvmextekfacnt/SampleCmd_1.cmd");
-        ExtensionProfileSettings extensionProfileSettings = ExtensionProfileSettings.create(uris, "SampleCmd_1.cmd");
+      VirtualMachineScaleSetIpConfiguration virtualMachineScaleSetIpConfiguration =
+         VirtualMachineScaleSetIpConfiguration.create("ipconfig1", virtualMachineScaleSetIpConfigurationProperties);
 
-        Map<String, String> protectedSettings = new HashMap<String, String>();
-        protectedSettings.put("StorageAccountKey", "jclouds-accountkey");
+      virtualMachineScaleSetIpConfigurations.add(virtualMachineScaleSetIpConfiguration);
 
-        ExtensionProperties extensionProperties = ExtensionProperties.create("Microsoft.compute", "CustomScriptExtension",
-                "1.1", false, extensionProfileSettings,
-                protectedSettings);
+      VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup = null;
 
-        Extension extension = Extension.create("extensionName", extensionProperties);
-        extensions.add(extension);
+      ArrayList<String> dnsList = new ArrayList<String>();
+      dnsList.add("8.8.8.8");
+      VirtualMachineScaleSetDNSSettings dnsSettings =  VirtualMachineScaleSetDNSSettings.create(dnsList);
 
-        return ExtensionProfile.create(extensions);
-    }
+      NetworkInterfaceConfigurationProperties networkInterfaceConfigurationProperties =
+         NetworkInterfaceConfigurationProperties.create(true, false, networkSecurityGroup, dnsSettings, virtualMachineScaleSetIpConfigurations);
+      NetworkInterfaceConfiguration networkInterfaceConfiguration = NetworkInterfaceConfiguration.create("nicconfig1", networkInterfaceConfigurationProperties);
+      networkInterfaceConfigurations.add(networkInterfaceConfiguration);
+
+      return VirtualMachineScaleSetNetworkProfile.create(networkInterfaceConfigurations);
+   }
 
 
-    private VirtualMachineScaleSetVirtualMachineProfile getVirtualMachineProfile() {
-        return VirtualMachineScaleSetVirtualMachineProfile.create(getLinuxStorageProfile_Default(), getOSProfile(), getNetworkProfile(), getExtensionProfile());
-    }
+   private ExtensionProfile getExtensionProfile() {
+      List<Extension> extensions = new ArrayList<Extension>();
 
-    public VirtualMachineScaleSetProperties getProperties() {
+      List<String> uris = new ArrayList<String>();
+      uris.add("https://mystorage1.blob.core.windows.net/winvmextekfacnt/SampleCmd_1.cmd");
+      ExtensionProfileSettings extensionProfileSettings = ExtensionProfileSettings.create(uris, "SampleCmd_1.cmd");
 
-        return VirtualMachineScaleSetProperties.create(null, null, getUpgradePolicy(), getVirtualMachineProfile());
-    }
+      Map<String, String> protectedSettings = new HashMap<String, String>();
+      protectedSettings.put("StorageAccountKey", "jclouds-accountkey");
 
-    private NetworkInterfaceCard createNetworkInterfaceCard(final String resourceGroupName, String networkInterfaceCardName, String locationName, String ipConfigurationName) {
-        //Create properties object
-        final NetworkInterfaceCardProperties networkInterfaceCardProperties = NetworkInterfaceCardProperties
-                .builder()
-                .ipConfigurations(
-                        Arrays.asList(IpConfiguration.create(ipConfigurationName, null, null, null, IpConfigurationProperties
-                                .create(null, null, "Dynamic", IdReference.create(subnetId), null, null, null)))).build();
+      ExtensionProperties extensionProperties = ExtensionProperties.create("Microsoft.compute", "CustomScriptExtension",
+         "1.1", false, extensionProfileSettings,
+         protectedSettings);
 
-        final Map<String, String> tags = ImmutableMap.of("jclouds", "livetest");
-        return api.getNetworkInterfaceCardApi(resourceGroupName).createOrUpdate(networkInterfaceCardName, locationName, networkInterfaceCardProperties, tags);
-    }
+      Extension extension = Extension.create("extensionName", extensionProperties);
+      extensions.add(extension);
 
-    public String getSubscriptionid() {
-        return subscriptionid;
-    }
+      return ExtensionProfile.create(extensions);
+   }
+
+
+   private VirtualMachineScaleSetVirtualMachineProfile getVirtualMachineProfile() {
+      return VirtualMachineScaleSetVirtualMachineProfile.create(getLinuxStorageProfile_Default(), getOSProfile(), getNetworkProfile(), getExtensionProfile());
+   }
+
+   public VirtualMachineScaleSetProperties getProperties() {
+
+      return VirtualMachineScaleSetProperties.create(null, null, getUpgradePolicy(), getVirtualMachineProfile());
+   }
+
+   private NetworkInterfaceCard createNetworkInterfaceCard(final String resourceGroupName, String networkInterfaceCardName, String locationName, String ipConfigurationName) {
+      //Create properties object
+      final NetworkInterfaceCardProperties networkInterfaceCardProperties = NetworkInterfaceCardProperties
+         .builder()
+         .ipConfigurations(
+            Arrays.asList(IpConfiguration.create(ipConfigurationName, null, null, null, IpConfigurationProperties
+               .create(null, null, "Dynamic", IdReference.create(subnetId), null, null, null)))).build();
+
+      final Map<String, String> tags = ImmutableMap.of("jclouds", "livetest");
+      return api.getNetworkInterfaceCardApi(resourceGroupName).createOrUpdate(networkInterfaceCardName, locationName, networkInterfaceCardProperties, tags);
+   }
+
+   public String getSubscriptionid() {
+      return subscriptionid;
+   }
 }

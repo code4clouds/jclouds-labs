@@ -26,77 +26,96 @@ import java.util.List;
 @AutoValue
 public abstract class VirtualMachineScaleSetIpConfigurationProperties {
 
-    @Nullable
-    public abstract VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration();
+   /**
+    * The public IP address configuration of the Virtual Machine Scale Set Ip Configuration Properties
+    */
+   @Nullable
+   public abstract VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration();
 
-    public abstract Subnet subnet();
+   /**
+    * The subnet of the Virtual Machine Scale Set Ip Configuration Properties
+    */
+   public abstract Subnet subnet();
 
-    @Nullable
-    public abstract String privateIPAddressVersion();
+   /**
+    * The private IP address version of the Virtual Machine Scale Set Ip Configuration Properties
+    */
+   @Nullable
+   public abstract String privateIPAddressVersion();
 
-    @Nullable
-    public abstract List<IdReference> loadBalancerBackendAddressPools();
+   /**
+    * The load balancer backend address pools of the Virtual Machine Scale Set Ip Configuration Properties
+    */
+   @Nullable
+   public abstract List<IdReference> loadBalancerBackendAddressPools();
 
-    @Nullable
-    public abstract List<IdReference> loadBalancerInboundNatPools();
+   /**
+    * The load balancer inbound nat pools of the Virtual Machine Scale Set Ip Configuration Properties
+    */
+   @Nullable
+   public abstract List<IdReference> loadBalancerInboundNatPools();
 
-    @Nullable
-    public abstract String applicationGatewayBackendAddressPools();
+   /**
+    * The application gateway backend address Pools of the Virtual Machine Scale Set Ip Configuration Properties
+    */
+   @Nullable
+   public abstract String applicationGatewayBackendAddressPools();
 
-    @SerializedNames({"publicIPAddressConfiguration", "subnet", "privateIPAddressVersion", "loadBalancerBackendAddressPools",
-            "loadBalancerInboundNatPools", "applicationGatewayBackendAddressPools"})
-    public static VirtualMachineScaleSetIpConfigurationProperties create(final VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration,
-                                                                         final Subnet subnet,
-                                                                         final String privateIPAddressVersion,
-                                                                         final List<IdReference> loadBalancerBackendAddressPools,
-                                                                         final List<IdReference> loadBalancerInboundNatPools,
-                                                                         final String applicationGatewayBackendAddressPools)
+   @SerializedNames({"publicIPAddressConfiguration", "subnet", "privateIPAddressVersion",
+      "loadBalancerBackendAddressPools", "loadBalancerInboundNatPools", "applicationGatewayBackendAddressPools"})
+   public static VirtualMachineScaleSetIpConfigurationProperties create(
+      final VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration,
+      final Subnet subnet,
+      final String privateIPAddressVersion,
+      final List<IdReference> loadBalancerBackendAddressPools,
+      final List<IdReference> loadBalancerInboundNatPools,
+      final String applicationGatewayBackendAddressPools)
 
-    {
+   {
 
-        return builder()
-                .publicIPAddressConfiguration(publicIPAddressConfiguration)
-                .subnet(subnet)
-                .privateIPAddressVersion(privateIPAddressVersion)
-                .loadBalancerBackendAddressPools(loadBalancerBackendAddressPools)
-                .loadBalancerInboundNatPools(loadBalancerInboundNatPools)
-                .applicationGatewayBackendAddressPools(applicationGatewayBackendAddressPools)
-                .build();
-    }
+      return builder()
+         .publicIPAddressConfiguration(publicIPAddressConfiguration)
+         .subnet(subnet)
+         .privateIPAddressVersion(privateIPAddressVersion)
+         .loadBalancerBackendAddressPools(loadBalancerBackendAddressPools)
+         .loadBalancerInboundNatPools(loadBalancerInboundNatPools)
+         .applicationGatewayBackendAddressPools(applicationGatewayBackendAddressPools)
+         .build();
+   }
 
-    public abstract Builder toBuilder();
+   public abstract Builder toBuilder();
 
-    public static Builder builder() {
-        return new AutoValue_VirtualMachineScaleSetIpConfigurationProperties.Builder();
-    }
+   public static Builder builder() {
+      return new AutoValue_VirtualMachineScaleSetIpConfigurationProperties.Builder();
+   }
 
-    @AutoValue.Builder
-    public abstract static class Builder {
-        public abstract Builder publicIPAddressConfiguration(VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration);
+   @AutoValue.Builder
+   public abstract static class Builder {
+      public abstract Builder publicIPAddressConfiguration(VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration);
 
-        public abstract Builder subnet(Subnet subnet);
+      public abstract Builder subnet(Subnet subnet);
 
-        public abstract Builder privateIPAddressVersion(String privateIPAddressVersion);
+      public abstract Builder privateIPAddressVersion(String privateIPAddressVersion);
 
-        public abstract Builder loadBalancerBackendAddressPools(List<IdReference> loadBalancerBackendAddressPools);
+      public abstract Builder loadBalancerBackendAddressPools(List<IdReference> loadBalancerBackendAddressPools);
 
-        public abstract Builder loadBalancerInboundNatPools(List<IdReference> loadBalancerInboundNatPools);
+      public abstract Builder loadBalancerInboundNatPools(List<IdReference> loadBalancerInboundNatPools);
 
-        public abstract Builder applicationGatewayBackendAddressPools(String applicationGatewayBackendAddressPools);
+      public abstract Builder applicationGatewayBackendAddressPools(String applicationGatewayBackendAddressPools);
 
-        abstract List<IdReference> loadBalancerBackendAddressPools();
+      abstract List<IdReference> loadBalancerBackendAddressPools();
 
-        abstract List<IdReference> loadBalancerInboundNatPools();
+      abstract List<IdReference> loadBalancerInboundNatPools();
 
-        abstract VirtualMachineScaleSetIpConfigurationProperties autoBuild();
+      abstract VirtualMachineScaleSetIpConfigurationProperties autoBuild();
 
-        public VirtualMachineScaleSetIpConfigurationProperties build() {
-            loadBalancerBackendAddressPools(loadBalancerBackendAddressPools() != null ? ImmutableList
-                    .copyOf(loadBalancerBackendAddressPools()) : null);
-            loadBalancerInboundNatPools(loadBalancerInboundNatPools() != null ? ImmutableList
-                    .copyOf(loadBalancerInboundNatPools()) : null);
-            return autoBuild();
-        }
-    }
+      public VirtualMachineScaleSetIpConfigurationProperties build() {
+         loadBalancerBackendAddressPools(loadBalancerBackendAddressPools() != null ? ImmutableList
+            .copyOf(loadBalancerBackendAddressPools()) : ImmutableList.<IdReference>of());
+         loadBalancerInboundNatPools(loadBalancerInboundNatPools() != null ? ImmutableList
+            .copyOf(loadBalancerInboundNatPools()) : ImmutableList.<IdReference>of());
+         return autoBuild();
+      }
+   }
 }
 

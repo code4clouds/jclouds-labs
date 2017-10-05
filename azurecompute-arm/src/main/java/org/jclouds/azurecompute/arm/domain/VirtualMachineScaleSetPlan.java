@@ -25,27 +25,27 @@ import org.jclouds.json.SerializedNames;
  */
 @AutoValue
 public abstract class VirtualMachineScaleSetPlan {
-    /**
-     * The name of the VirtualMachineScaleSetPlan
-     */
-    @Nullable
-    public abstract String name();
+   /**
+    * The name of the Virtual Machine Scale Set Plan
+    */
+   @Nullable
+   public abstract String name();
 
-    /**
-     * The publisher of the VirtualMachineScaleSetPlan
-     */
-    @Nullable
-    public abstract String publisher();
+   /**
+    * The publisher of the Virtual Machine Scale Set Plan
+    */
+   @Nullable
+   public abstract String publisher();
 
-    /**
-     * The product of the VirtualMachineScaleSetPlan
-     */
-    @Nullable
-    public abstract String product();
+   /**
+    * The product of the Virtual Machine Scale Set Plan
+    */
+   @Nullable
+   public abstract String product();
 
-    @SerializedNames({"name", "tier", "capacity"})
-    public static VirtualMachineScaleSetPlan create(final String name, final String publisher, final String product) {
+   @SerializedNames({"name", "tier", "capacity"})
+   public static VirtualMachineScaleSetPlan create(final String name, final String publisher, final String product) {
 
-        return new AutoValue_VirtualMachineScaleSetPlan(name, publisher, product);
-    }
+      return new AutoValue_VirtualMachineScaleSetPlan(name, publisher, product);
+   }
 }

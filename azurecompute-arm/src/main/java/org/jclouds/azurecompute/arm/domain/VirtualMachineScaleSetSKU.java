@@ -24,25 +24,26 @@ import org.jclouds.json.SerializedNames;
  */
 @AutoValue
 public abstract class VirtualMachineScaleSetSKU {
-    /**
-     * The name of the VirtualMachineScaleSetSKU
-     */
-    public abstract String name();
 
-    /**
-     * The location of the VirtualMachineScaleSetSKU
-     */
-    public abstract String tier();
+   /**
+    * The name of the Virtual Machine Scale Set SKU
+    */
+   public abstract String name();
 
-    /**
-     * The id of the VirtualMachineScaleSetSKU
-     */
-    public abstract int capacity();
+   /**
+    * The tier of the Virtual Machine Scale Set SKU
+    */
+   public abstract String tier();
 
-    @SerializedNames({"name", "tier", "capacity"})
-    public static VirtualMachineScaleSetSKU create(final String name, final String tier, final int capacity) {
+   /**
+    * The capacity of the Virtual Machine Scale Set SKU
+    */
+   public abstract int capacity();
 
-        return new AutoValue_VirtualMachineScaleSetSKU(name, tier, capacity);
-    }
+   @SerializedNames({"name", "tier", "capacity"})
+   public static VirtualMachineScaleSetSKU create(final String name, final String tier, final int capacity) {
+
+      return new AutoValue_VirtualMachineScaleSetSKU(name, tier, capacity);
+   }
 }
 
