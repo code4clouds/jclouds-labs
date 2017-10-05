@@ -31,7 +31,7 @@ public abstract class VirtualMachineScaleSetNetworkSecurityGroup {
     @Nullable
     public abstract String id();
 
-    @SerializedNames({"dnsSettings"})
+    @SerializedNames({"networkSecurityGroup"})
     public static VirtualMachineScaleSetNetworkSecurityGroup create(final String id) {
 
         return new AutoValue_VirtualMachineScaleSetNetworkSecurityGroup(id);
