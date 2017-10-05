@@ -92,9 +92,9 @@ public abstract class VirtualMachineScaleSetIpConfigurationProperties {
 
       public VirtualMachineScaleSetIpConfigurationProperties build() {
          loadBalancerBackendAddressPools(loadBalancerBackendAddressPools() != null ? ImmutableList
-            .copyOf(loadBalancerBackendAddressPools()) : null);
+            .copyOf(loadBalancerBackendAddressPools()) : ImmutableList.<IdReference>of());
          loadBalancerInboundNatPools(loadBalancerInboundNatPools() != null ? ImmutableList
-            .copyOf(loadBalancerInboundNatPools()) : null);
+            .copyOf(loadBalancerInboundNatPools()) : ImmutableList.<IdReference>of());
          return autoBuild();
       }
    }

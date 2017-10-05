@@ -17,6 +17,7 @@
 package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableMap;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
@@ -56,11 +57,15 @@ public abstract class ExtensionProperties {
    @Nullable
    public abstract Map<String, String> protectedSettings();
 
-   @SerializedNames({ "publisher", "type", "typeHandlerVersion", "autoUpgradeMinorVersion", "settings", "protectedSettings"})
-   public static ExtensionProperties create(final String publisher, String type, final String typeHandlerVersion,
-                                            final Boolean autoUpgradeMinorVersion, final ExtensionProfileSettings settings,
+   @SerializedNames({ "publisher", "type", "typeHandlerVersion",
+      "autoUpgradeMinorVersion", "settings", "protectedSettings"})
+   public static ExtensionProperties create(final String publisher, String type,
+                                            final String typeHandlerVersion,
+                                            final Boolean autoUpgradeMinorVersion,
+                                            final ExtensionProfileSettings settings,
                                             final Map<String, String> protectedSettings) {
-      return new AutoValue_ExtensionProperties(publisher, type, typeHandlerVersion, autoUpgradeMinorVersion, settings, protectedSettings);
+      return new AutoValue_ExtensionProperties(publisher, type, typeHandlerVersion, autoUpgradeMinorVersion,
+         settings, protectedSettings == null ? ImmutableMap.<String,String>of() : ImmutableMap.copyOf(protectedSettings));
    }
 }
 

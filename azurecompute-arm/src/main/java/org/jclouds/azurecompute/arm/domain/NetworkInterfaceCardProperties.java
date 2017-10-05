@@ -18,9 +18,11 @@ package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
+import javax.security.auth.login.Configuration;
 import java.util.List;
 
 @AutoValue
@@ -40,7 +42,7 @@ public abstract class NetworkInterfaceCardProperties implements Provisionable {
               .provisioningState(provisioningState)
               .resourceGuid(resourceGuid)
               .enableIPForwarding(enableIPForwarding)
-              .ipConfigurations(ipConfigurations == null ? null : ImmutableList.copyOf(ipConfigurations))
+              .ipConfigurations(ipConfigurations == null ? ImmutableList.<IpConfiguration>of() : ImmutableList.copyOf(ipConfigurations))
               .networkSecurityGroup(networkSecurityGroup);
 
       return builder.build();

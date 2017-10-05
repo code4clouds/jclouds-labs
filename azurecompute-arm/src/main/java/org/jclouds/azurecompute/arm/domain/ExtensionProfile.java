@@ -17,6 +17,7 @@
 package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
 import org.jclouds.json.SerializedNames;
 
 import java.util.List;
@@ -32,6 +33,6 @@ public abstract class ExtensionProfile {
 
    @SerializedNames({"extensions"})
    public static ExtensionProfile create(final List<Extension> extensions) {
-      return new AutoValue_ExtensionProfile(extensions);
+      return new AutoValue_ExtensionProfile(extensions == null? ImmutableList.<Extension>of() : ImmutableList.copyOf(extensions));
    }
 }

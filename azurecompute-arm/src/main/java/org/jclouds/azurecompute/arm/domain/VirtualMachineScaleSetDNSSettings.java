@@ -17,6 +17,8 @@
 package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
@@ -36,6 +38,7 @@ public abstract class VirtualMachineScaleSetDNSSettings {
    @SerializedNames({"dnsServers"})
    public static VirtualMachineScaleSetDNSSettings create(final List<String> dnsServers) {
 
-      return new AutoValue_VirtualMachineScaleSetDNSSettings(dnsServers);
+      return new AutoValue_VirtualMachineScaleSetDNSSettings(
+         dnsServers == null ? ImmutableList.<String>of() : ImmutableList.copyOf(dnsServers));
    }
 }

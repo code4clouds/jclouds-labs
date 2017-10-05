@@ -17,6 +17,7 @@
 package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
 import org.jclouds.json.SerializedNames;
 
 import java.util.List;
@@ -28,10 +29,12 @@ public abstract class VirtualMachineScaleSetNetworkProfile {
 
 
    @SerializedNames({"networkInterfaceConfigurations"})
-   public static VirtualMachineScaleSetNetworkProfile create(final List<NetworkInterfaceConfiguration> networkInterfaceConfigurations) {
-      return builder()
-         .networkInterfaceConfigurations(networkInterfaceConfigurations)
-         .build();
+   public static VirtualMachineScaleSetNetworkProfile create(
+      final List<NetworkInterfaceConfiguration> networkInterfaceConfigurations) {
+         return builder()
+            .networkInterfaceConfigurations(networkInterfaceConfigurations == null ?
+               ImmutableList.<NetworkInterfaceConfiguration>of() : ImmutableList.copyOf(networkInterfaceConfigurations) )
+            .build();
    }
 
    public abstract Builder toBuilder();
@@ -43,7 +46,8 @@ public abstract class VirtualMachineScaleSetNetworkProfile {
    @AutoValue.Builder
    public abstract static class Builder {
 
-      public abstract Builder networkInterfaceConfigurations(List<NetworkInterfaceConfiguration> networkInterfaceConfigurations);
+      public abstract Builder networkInterfaceConfigurations(
+         List<NetworkInterfaceConfiguration> networkInterfaceConfigurations);
 
       public abstract VirtualMachineScaleSetNetworkProfile build();
 

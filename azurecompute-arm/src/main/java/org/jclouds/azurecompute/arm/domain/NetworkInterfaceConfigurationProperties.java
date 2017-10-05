@@ -17,6 +17,7 @@
 package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
@@ -58,14 +59,18 @@ public abstract class NetworkInterfaceConfigurationProperties {
    public abstract List<VirtualMachineScaleSetIpConfiguration> ipConfigurations();
 
 
-   @SerializedNames({"primary", "enableAcceleratedNetworking", "networkSecurityGroup", "dnsSettings", "ipConfigurations"})
-   public static NetworkInterfaceConfigurationProperties create(final Boolean primary,
-                                                                final Boolean enableAcceleratedNetworking,
-                                                                final VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup,
-                                                                final VirtualMachineScaleSetDNSSettings dnsSettings,
-                                                                final List<VirtualMachineScaleSetIpConfiguration> ipConfigurations) {
+   @SerializedNames({"primary", "enableAcceleratedNetworking", "networkSecurityGroup",
+      "dnsSettings", "ipConfigurations"})
+   public static NetworkInterfaceConfigurationProperties
+      create(final Boolean primary,
+             final Boolean enableAcceleratedNetworking,
+             final VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup,
+             final VirtualMachineScaleSetDNSSettings dnsSettings,
+             final List<VirtualMachineScaleSetIpConfiguration> ipConfigurations) {
 
       return new AutoValue_NetworkInterfaceConfigurationProperties(primary, enableAcceleratedNetworking,
-         networkSecurityGroup, dnsSettings, ipConfigurations);
+         networkSecurityGroup, dnsSettings,
+         ipConfigurations == null ?
+            ImmutableList.<VirtualMachineScaleSetIpConfiguration>of() : ImmutableList.copyOf(ipConfigurations));
    }
 }
