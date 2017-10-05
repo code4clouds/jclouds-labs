@@ -47,7 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The Virtual Machine API includes operations for managing the virtual machines in your subscription.
+ * The Virtual Machine Scale Set API includes operations for managing the virtual machines in your subscription.
  *
  * @see <a href="https://docs.microsoft.com/en-us/rest/api/virtualmachinescalesets/">docs</a>
  */
