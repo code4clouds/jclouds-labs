@@ -48,16 +48,17 @@ public abstract class VirtualMachineScaleSetVirtualMachineProfile {
 
 
    @SerializedNames({"storageProfile", "osProfile", "networkProfile", "extensionProfile"})
-   public static VirtualMachineScaleSetVirtualMachineProfile create(final StorageProfile storageProfile,
-                                                                    final VirtualMachineScaleSetOSProfile osProfile,
-                                                                    final VirtualMachineScaleSetNetworkProfile networkProfile,
-                                                                    final ExtensionProfile extensionProfile) {
-      return builder()
-         .storageProfile(storageProfile)
-         .osProfile(osProfile)
-         .networkProfile(networkProfile)
-         .extensionProfile(extensionProfile)
-         .build();
+   public static VirtualMachineScaleSetVirtualMachineProfile create(
+      final StorageProfile storageProfile,
+      final VirtualMachineScaleSetOSProfile osProfile,
+      final VirtualMachineScaleSetNetworkProfile networkProfile,
+      final ExtensionProfile extensionProfile) {
+         return builder()
+            .storageProfile(storageProfile)
+            .osProfile(osProfile)
+            .networkProfile(networkProfile)
+            .extensionProfile(extensionProfile)
+            .build();
    }
 
    public abstract Builder toBuilder();

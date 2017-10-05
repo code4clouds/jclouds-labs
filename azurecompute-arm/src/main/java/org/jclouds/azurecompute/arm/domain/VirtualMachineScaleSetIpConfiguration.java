@@ -31,8 +31,9 @@ public abstract class VirtualMachineScaleSetIpConfiguration {
    public abstract VirtualMachineScaleSetIpConfigurationProperties properties();
 
    @SerializedNames({"name", "properties"})
-   public static VirtualMachineScaleSetIpConfiguration create(final String name,
-                                                              final VirtualMachineScaleSetIpConfigurationProperties properties) {
+   public static VirtualMachineScaleSetIpConfiguration create(
+      final String name,
+      final VirtualMachineScaleSetIpConfigurationProperties properties) {
       return builder()
          .name(name)
          .properties(properties)

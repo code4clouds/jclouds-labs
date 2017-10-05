@@ -18,11 +18,9 @@ package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
-import javax.security.auth.login.Configuration;
 import java.util.List;
 
 @AutoValue
@@ -34,7 +32,8 @@ public abstract class NetworkInterfaceCardProperties implements Provisionable {
    @Nullable public abstract List<IpConfiguration> ipConfigurations();
    @Nullable public abstract IdReference networkSecurityGroup();
 
-   @SerializedNames({"provisioningState", "resourceGuid", "enableIPForwarding", "ipConfigurations", "networkSecurityGroup"})
+   @SerializedNames({"provisioningState", "resourceGuid", "enableIPForwarding", "ipConfigurations",
+      "networkSecurityGroup"})
    public static NetworkInterfaceCardProperties create(final String provisioningState, final String resourceGuid,
          final Boolean enableIPForwarding, final List<IpConfiguration> ipConfigurations,
          final IdReference networkSecurityGroup) {
@@ -42,7 +41,8 @@ public abstract class NetworkInterfaceCardProperties implements Provisionable {
               .provisioningState(provisioningState)
               .resourceGuid(resourceGuid)
               .enableIPForwarding(enableIPForwarding)
-              .ipConfigurations(ipConfigurations == null ? ImmutableList.<IpConfiguration>of() : ImmutableList.copyOf(ipConfigurations))
+              .ipConfigurations(ipConfigurations == null ?
+                 ImmutableList.<IpConfiguration>of() : ImmutableList.copyOf(ipConfigurations))
               .networkSecurityGroup(networkSecurityGroup);
 
       return builder.build();

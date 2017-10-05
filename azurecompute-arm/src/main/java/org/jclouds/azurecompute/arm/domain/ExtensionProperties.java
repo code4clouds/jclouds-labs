@@ -65,7 +65,8 @@ public abstract class ExtensionProperties {
                                             final ExtensionProfileSettings settings,
                                             final Map<String, String> protectedSettings) {
       return new AutoValue_ExtensionProperties(publisher, type, typeHandlerVersion, autoUpgradeMinorVersion,
-         settings, protectedSettings == null ? ImmutableMap.<String,String>of() : ImmutableMap.copyOf(protectedSettings));
+         settings, protectedSettings == null ?
+         ImmutableMap.<String, String>of() : ImmutableMap.copyOf(protectedSettings));
    }
 }
 

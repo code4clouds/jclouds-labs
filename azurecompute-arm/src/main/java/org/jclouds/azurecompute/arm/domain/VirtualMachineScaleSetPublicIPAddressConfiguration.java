@@ -27,9 +27,10 @@ public abstract class VirtualMachineScaleSetPublicIPAddressConfiguration {
    public abstract VirtualMachineScaleSetPublicIPAddressProperties properties();
 
    @SerializedNames({ "name",  "properties" })
-   public static VirtualMachineScaleSetPublicIPAddressConfiguration create(String name,
-                                                                           VirtualMachineScaleSetPublicIPAddressProperties properties) {
-      return builder().name(name).properties(properties).build();
+   public static VirtualMachineScaleSetPublicIPAddressConfiguration create(
+      String name,
+      VirtualMachineScaleSetPublicIPAddressProperties properties) {
+         return builder().name(name).properties(properties).build();
    }
 
    VirtualMachineScaleSetPublicIPAddressConfiguration() {

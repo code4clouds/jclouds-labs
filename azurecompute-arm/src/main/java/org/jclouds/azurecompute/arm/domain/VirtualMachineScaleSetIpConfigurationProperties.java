@@ -43,14 +43,15 @@ public abstract class VirtualMachineScaleSetIpConfigurationProperties {
    @Nullable
    public abstract String applicationGatewayBackendAddressPools();
 
-   @SerializedNames({"publicIPAddressConfiguration", "subnet", "privateIPAddressVersion", "loadBalancerBackendAddressPools",
-      "loadBalancerInboundNatPools", "applicationGatewayBackendAddressPools"})
-   public static VirtualMachineScaleSetIpConfigurationProperties create(final VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration,
-                                                                        final Subnet subnet,
-                                                                        final String privateIPAddressVersion,
-                                                                        final List<IdReference> loadBalancerBackendAddressPools,
-                                                                        final List<IdReference> loadBalancerInboundNatPools,
-                                                                        final String applicationGatewayBackendAddressPools)
+   @SerializedNames({"publicIPAddressConfiguration", "subnet", "privateIPAddressVersion",
+      "loadBalancerBackendAddressPools", "loadBalancerInboundNatPools", "applicationGatewayBackendAddressPools"})
+   public static VirtualMachineScaleSetIpConfigurationProperties create(
+      final VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration,
+      final Subnet subnet,
+      final String privateIPAddressVersion,
+      final List<IdReference> loadBalancerBackendAddressPools,
+      final List<IdReference> loadBalancerInboundNatPools,
+      final String applicationGatewayBackendAddressPools)
 
    {
 

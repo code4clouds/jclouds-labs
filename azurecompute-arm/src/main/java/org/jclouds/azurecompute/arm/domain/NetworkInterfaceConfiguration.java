@@ -38,7 +38,8 @@ public abstract class NetworkInterfaceConfiguration {
    public abstract NetworkInterfaceConfigurationProperties networkInterfaceConfigurationProperties();
 
    @SerializedNames({"name", "properties"})
-   public static NetworkInterfaceConfiguration create(final String name, NetworkInterfaceConfigurationProperties networkInterfaceConfigurationProperties) {
+   public static NetworkInterfaceConfiguration create(
+      final String name, NetworkInterfaceConfigurationProperties networkInterfaceConfigurationProperties) {
 
       return new AutoValue_NetworkInterfaceConfiguration(name, networkInterfaceConfigurationProperties);
    }

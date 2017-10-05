@@ -33,6 +33,7 @@ public abstract class ExtensionProfile {
 
    @SerializedNames({"extensions"})
    public static ExtensionProfile create(final List<Extension> extensions) {
-      return new AutoValue_ExtensionProfile(extensions == null? ImmutableList.<Extension>of() : ImmutableList.copyOf(extensions));
+      return new AutoValue_ExtensionProfile(extensions == null ?
+         ImmutableList.<Extension>of() : ImmutableList.copyOf(extensions));
    }
 }
