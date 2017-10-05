@@ -27,15 +27,15 @@ import java.util.List;
  */
 @AutoValue
 public abstract class VirtualMachineScaleSetDNSSettings {
-    /**
-     * The name of the NetworkInterfaceConfiguration
-     */
-    @Nullable
-    public abstract List<String> dnsServers();
+   /**
+    * The name of the NetworkInterfaceConfiguration
+    */
+   @Nullable
+   public abstract List<String> dnsServers();
 
-    @SerializedNames({"dnsServers"})
-    public static VirtualMachineScaleSetDNSSettings create(final List<String> dnsServers) {
+   @SerializedNames({"dnsServers"})
+   public static VirtualMachineScaleSetDNSSettings create(final List<String> dnsServers) {
 
-        return new AutoValue_VirtualMachineScaleSetDNSSettings(dnsServers);
-    }
+      return new AutoValue_VirtualMachineScaleSetDNSSettings(dnsServers);
+   }
 }

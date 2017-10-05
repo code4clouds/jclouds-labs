@@ -27,45 +27,45 @@ import java.util.List;
  */
 @AutoValue
 public abstract class NetworkInterfaceConfigurationProperties {
-    /**
-     * The primary of the NetworkInterfaceConfigurationProperties
-     */
-    @Nullable
-    public abstract Boolean primary();
+   /**
+    * The primary of the NetworkInterfaceConfigurationProperties
+    */
+   @Nullable
+   public abstract Boolean primary();
 
-    /**
-     * The enableAcceleratedNetworking of the NetworkInterfaceConfigurationProperties
-     */
-    @Nullable
-    public abstract Boolean enableAcceleratedNetworking();
+   /**
+    * The enableAcceleratedNetworking of the NetworkInterfaceConfigurationProperties
+    */
+   @Nullable
+   public abstract Boolean enableAcceleratedNetworking();
 
-    /**
-     * The networkSecurityGroup of the NetworkInterfaceConfigurationProperties
-     */
-    @Nullable
-    public abstract VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup();
+   /**
+    * The networkSecurityGroup of the NetworkInterfaceConfigurationProperties
+    */
+   @Nullable
+   public abstract VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup();
 
-    /**
-     * The dnsSettings of the VirtualMachineScaleSetDNSSettings
-     */
-    @Nullable
-    public abstract VirtualMachineScaleSetDNSSettings dnsSettings();
+   /**
+    * The dnsSettings of the VirtualMachineScaleSetDNSSettings
+    */
+   @Nullable
+   public abstract VirtualMachineScaleSetDNSSettings dnsSettings();
 
-    /**
-     * The ipConfigurations of the NetworkInterfaceConfigurationProperties
-     */
-    @Nullable
-    public abstract List<VirtualMachineScaleSetIpConfiguration> ipConfigurations();
+   /**
+    * The ipConfigurations of the NetworkInterfaceConfigurationProperties
+    */
+   @Nullable
+   public abstract List<VirtualMachineScaleSetIpConfiguration> ipConfigurations();
 
 
-    @SerializedNames({"primary", "enableAcceleratedNetworking", "networkSecurityGroup", "dnsSettings", "ipConfigurations"})
-    public static NetworkInterfaceConfigurationProperties create(final Boolean primary,
-                                                               final Boolean enableAcceleratedNetworking,
-                                                               final VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup,
-                                                               final VirtualMachineScaleSetDNSSettings dnsSettings,
-                                                               final List<VirtualMachineScaleSetIpConfiguration> ipConfigurations) {
+   @SerializedNames({"primary", "enableAcceleratedNetworking", "networkSecurityGroup", "dnsSettings", "ipConfigurations"})
+   public static NetworkInterfaceConfigurationProperties create(final Boolean primary,
+                                                                final Boolean enableAcceleratedNetworking,
+                                                                final VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup,
+                                                                final VirtualMachineScaleSetDNSSettings dnsSettings,
+                                                                final List<VirtualMachineScaleSetIpConfiguration> ipConfigurations) {
 
-        return new AutoValue_NetworkInterfaceConfigurationProperties(primary, enableAcceleratedNetworking,
-                networkSecurityGroup, dnsSettings, ipConfigurations);
-    }
+      return new AutoValue_NetworkInterfaceConfigurationProperties(primary, enableAcceleratedNetworking,
+         networkSecurityGroup, dnsSettings, ipConfigurations);
+   }
 }

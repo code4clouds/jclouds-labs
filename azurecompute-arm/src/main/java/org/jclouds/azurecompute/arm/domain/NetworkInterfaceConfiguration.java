@@ -25,22 +25,22 @@ import org.jclouds.json.SerializedNames;
  */
 @AutoValue
 public abstract class NetworkInterfaceConfiguration {
-    /**
-     * The name of the NetworkInterfaceConfiguration
-     */
-    @Nullable
-    public abstract String name();
+   /**
+    * The name of the NetworkInterfaceConfiguration
+    */
+   @Nullable
+   public abstract String name();
 
-    /**
-     * The networkConfigurationProperties of the NetworkInterfaceConfiguration
-     */
-    @Nullable
-    public abstract NetworkInterfaceConfigurationProperties networkInterfaceConfigurationProperties();
+   /**
+    * The networkConfigurationProperties of the NetworkInterfaceConfiguration
+    */
+   @Nullable
+   public abstract NetworkInterfaceConfigurationProperties networkInterfaceConfigurationProperties();
 
-    @SerializedNames({"name", "properties"})
-    public static NetworkInterfaceConfiguration create(final String name, NetworkInterfaceConfigurationProperties networkInterfaceConfigurationProperties) {
+   @SerializedNames({"name", "properties"})
+   public static NetworkInterfaceConfiguration create(final String name, NetworkInterfaceConfigurationProperties networkInterfaceConfigurationProperties) {
 
-        return new AutoValue_NetworkInterfaceConfiguration(name, networkInterfaceConfigurationProperties);
-    }
+      return new AutoValue_NetworkInterfaceConfiguration(name, networkInterfaceConfigurationProperties);
+   }
 
 }

@@ -34,11 +34,11 @@ public abstract class VirtualMachineScaleSetIpConfiguration {
    public static VirtualMachineScaleSetIpConfiguration create(final String name,
                                                               final VirtualMachineScaleSetIpConfigurationProperties properties) {
       return builder()
-              .name(name)
-              .properties(properties)
-              .build();
+         .name(name)
+         .properties(properties)
+         .build();
    }
-   
+
    public abstract Builder toBuilder();
 
    public static Builder builder() {

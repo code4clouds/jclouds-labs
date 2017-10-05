@@ -30,10 +30,10 @@ public abstract class VirtualMachineScaleSetPublicIPAddressProperties  {
    @SerializedNames({ "idleTimeoutInMinutes" })
    public static VirtualMachineScaleSetPublicIPAddressProperties create(final Integer idleTimeoutInMinutes) {
       return builder()
-              .idleTimeoutInMinutes(idleTimeoutInMinutes)
-              .build();
+         .idleTimeoutInMinutes(idleTimeoutInMinutes)
+         .build();
    }
-   
+
    public abstract Builder toBuilder();
 
    public static Builder builder() {

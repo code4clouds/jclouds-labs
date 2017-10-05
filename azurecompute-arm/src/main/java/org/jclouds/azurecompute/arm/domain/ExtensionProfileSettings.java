@@ -36,8 +36,8 @@ public abstract class ExtensionProfileSettings {
     */
    public abstract String commandToExecute();
 
-    @SerializedNames({"fileUris", "commandToExecute"})
-    public static ExtensionProfileSettings create(final List<String> fileUris, final String commandToExecute) {
-        return new AutoValue_ExtensionProfileSettings(fileUris, commandToExecute);
-    }
+   @SerializedNames({"fileUris", "commandToExecute"})
+   public static ExtensionProfileSettings create(final List<String> fileUris, final String commandToExecute) {
+      return new AutoValue_ExtensionProfileSettings(fileUris, commandToExecute);
+   }
 }

@@ -25,15 +25,15 @@ import org.jclouds.json.SerializedNames;
  */
 @AutoValue
 public abstract class VirtualMachineScaleSetNetworkSecurityGroup {
-    /**
-     * The name of the NetworkInterfaceConfiguration
-     */
-    @Nullable
-    public abstract String id();
+   /**
+    * The name of the NetworkInterfaceConfiguration
+    */
+   @Nullable
+   public abstract String id();
 
-    @SerializedNames({"dnsSettings"})
-    public static VirtualMachineScaleSetNetworkSecurityGroup create(final String id) {
+   @SerializedNames({"dnsSettings"})
+   public static VirtualMachineScaleSetNetworkSecurityGroup create(final String id) {
 
-        return new AutoValue_VirtualMachineScaleSetNetworkSecurityGroup(id);
-    }
+      return new AutoValue_VirtualMachineScaleSetNetworkSecurityGroup(id);
+   }
 }

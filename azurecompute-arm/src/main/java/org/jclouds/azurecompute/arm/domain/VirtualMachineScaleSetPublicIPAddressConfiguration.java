@@ -33,9 +33,9 @@ public abstract class VirtualMachineScaleSetPublicIPAddressConfiguration {
    }
 
    VirtualMachineScaleSetPublicIPAddressConfiguration() {
-      
+
    }
-   
+
    public abstract Builder toBuilder();
 
    public static Builder builder() {
@@ -46,7 +46,7 @@ public abstract class VirtualMachineScaleSetPublicIPAddressConfiguration {
    public abstract static class Builder {
       public abstract Builder name(String name);
       public abstract Builder properties(VirtualMachineScaleSetPublicIPAddressProperties properties);
-      
+
       abstract VirtualMachineScaleSetPublicIPAddressConfiguration autoBuild();
 
       public VirtualMachineScaleSetPublicIPAddressConfiguration build() {

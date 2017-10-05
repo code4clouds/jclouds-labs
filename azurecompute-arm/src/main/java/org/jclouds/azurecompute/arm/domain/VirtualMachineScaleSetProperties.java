@@ -25,35 +25,35 @@ import org.jclouds.json.SerializedNames;
  */
 @AutoValue
 public abstract class VirtualMachineScaleSetProperties {
-    /**
-     * The singlePlacementGroup of the VirtualMachineScaleSetProperties
-     */
-    @Nullable
-    public abstract Boolean singlePlacementGroup();
+   /**
+    * The singlePlacementGroup of the VirtualMachineScaleSetProperties
+    */
+   @Nullable
+   public abstract Boolean singlePlacementGroup();
 
-    /**
-     *  Specifies the over provision of the virtual machine scale set
-     */
-    @Nullable
-    public abstract Boolean overProvision();
+   /**
+    *  Specifies the over provision of the virtual machine scale set
+    */
+   @Nullable
+   public abstract Boolean overProvision();
 
-    /**
-     *  Specifies the upgrade policy of the virtual machine scale set
-     */
-    public abstract VirtualMachineScaleSetUpgradePolicy upgradePolicy();
+   /**
+    *  Specifies the upgrade policy of the virtual machine scale set
+    */
+   public abstract VirtualMachineScaleSetUpgradePolicy upgradePolicy();
 
-    /**
-     *  Specifies the virtual machine profile of the virtual machine scale set
-     */
-    public abstract VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile();
+   /**
+    *  Specifies the virtual machine profile of the virtual machine scale set
+    */
+   public abstract VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile();
 
-    @SerializedNames({"singlePlacementGroup", "overProvision", "upgradePolicy", "virtualMachineProfile"})
-    public static VirtualMachineScaleSetProperties create(final Boolean singlePlacementGroup,
-                                                          final Boolean overProvision,
-                                                          final VirtualMachineScaleSetUpgradePolicy upgradePolicy,
-                                                          final VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile) {
+   @SerializedNames({"singlePlacementGroup", "overProvision", "upgradePolicy", "virtualMachineProfile"})
+   public static VirtualMachineScaleSetProperties create(final Boolean singlePlacementGroup,
+                                                         final Boolean overProvision,
+                                                         final VirtualMachineScaleSetUpgradePolicy upgradePolicy,
+                                                         final VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile) {
 
-        return new AutoValue_VirtualMachineScaleSetProperties(singlePlacementGroup, overProvision, upgradePolicy, virtualMachineProfile);
-    }
+      return new AutoValue_VirtualMachineScaleSetProperties(singlePlacementGroup, overProvision, upgradePolicy, virtualMachineProfile);
+   }
 }
 

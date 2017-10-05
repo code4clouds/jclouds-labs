@@ -25,42 +25,42 @@ import java.util.Map;
 @AutoValue
 public abstract class ExtensionProperties {
 
-    /**
-     * The autoUpgradeMinorVersion reference of the extension profile
-     */
-    public abstract String publisher();
+   /**
+    * The autoUpgradeMinorVersion reference of the extension profile
+    */
+   public abstract String publisher();
 
-    /**
-     * The autoUpgradeMinorVersion reference of the extension profile
-     */
-    public abstract String type();
+   /**
+    * The autoUpgradeMinorVersion reference of the extension profile
+    */
+   public abstract String type();
 
-    /**
-     * The autoUpgradeMinorVersion reference of the extension profile
-     */
-    public abstract String typeHandlerVersion();
+   /**
+    * The autoUpgradeMinorVersion reference of the extension profile
+    */
+   public abstract String typeHandlerVersion();
 
-    /**
-     * The autoUpgradeMinorVersion reference of the extension profile
-     */
-    public abstract Boolean autoUpgradeMinorVersion();
+   /**
+    * The autoUpgradeMinorVersion reference of the extension profile
+    */
+   public abstract Boolean autoUpgradeMinorVersion();
 
-    /**
-     * The ExtensionProfileSettings of the extension profile
-     */
-    public abstract ExtensionProfileSettings settings();
+   /**
+    * The ExtensionProfileSettings of the extension profile
+    */
+   public abstract ExtensionProfileSettings settings();
 
-    /**
-     * The list of the protectedSettings of the extension profile
-     */
-    @Nullable
-    public abstract Map<String, String> protectedSettings();
+   /**
+    * The list of the protectedSettings of the extension profile
+    */
+   @Nullable
+   public abstract Map<String, String> protectedSettings();
 
-    @SerializedNames({ "publisher", "type", "typeHandlerVersion", "autoUpgradeMinorVersion", "settings", "protectedSettings"})
-    public static ExtensionProperties create(final String publisher, String type, final String typeHandlerVersion,
-                                             final Boolean autoUpgradeMinorVersion, final ExtensionProfileSettings settings,
-                                             final Map<String, String> protectedSettings) {
-        return new AutoValue_ExtensionProperties(publisher, type, typeHandlerVersion, autoUpgradeMinorVersion, settings, protectedSettings);
-    }
+   @SerializedNames({ "publisher", "type", "typeHandlerVersion", "autoUpgradeMinorVersion", "settings", "protectedSettings"})
+   public static ExtensionProperties create(final String publisher, String type, final String typeHandlerVersion,
+                                            final Boolean autoUpgradeMinorVersion, final ExtensionProfileSettings settings,
+                                            final Map<String, String> protectedSettings) {
+      return new AutoValue_ExtensionProperties(publisher, type, typeHandlerVersion, autoUpgradeMinorVersion, settings, protectedSettings);
+   }
 }
 

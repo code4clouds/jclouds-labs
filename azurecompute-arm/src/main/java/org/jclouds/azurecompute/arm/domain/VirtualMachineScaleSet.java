@@ -30,81 +30,81 @@ import java.util.Map;
 @AutoValue
 public abstract class VirtualMachineScaleSet {
 
-    /**
-     * The id of the virtual machine scale set
-     */
-    @Nullable
-    public abstract String id();
+   /**
+    * The id of the virtual machine scale set
+    */
+   @Nullable
+   public abstract String id();
 
-    /**
-     * The name of the virtual machine scale set
-     */
-    @Nullable
-    public abstract String name();
+   /**
+    * The name of the virtual machine scale set
+    */
+   @Nullable
+   public abstract String name();
 
-    /**
-     * The location of the virtual machine scale set
-     */
-    @Nullable
-    public abstract String location();
+   /**
+    * The location of the virtual machine scale set
+    */
+   @Nullable
+   public abstract String location();
 
-    /**
-     * Specifies the type of the virtual machine scale set
-     */
-    public abstract VirtualMachineScaleSetSKU sku();
+   /**
+    * Specifies the type of the virtual machine scale set
+    */
+   public abstract VirtualMachineScaleSetSKU sku();
 
-    /**
-     * Specifies the tags of the virtual machine scale set
-     */
-    @Nullable
-    public abstract Map<String, String> tags();
-
-
-    /**
-     * Specifies the optional plan of the virtual machine scale set (only for market image)
-     */
-    @Nullable
-    public abstract VirtualMachineScaleSetPlan plan();
-
-    /**
-     * Specifies the properties of the availability set
-     */
-    @Nullable
-    public abstract VirtualMachineScaleSetProperties properties();
-
-    @SerializedNames({  "id", "name", "location", "sku", "tags", "plan", "properties"})
-    public static VirtualMachineScaleSet create(final String id, final String name, final String location,
-                                                VirtualMachineScaleSetSKU sku, final Map<String, String> tags,
-                                                VirtualMachineScaleSetPlan plan,
-                                                VirtualMachineScaleSetProperties properties) {
-        return builder().id(id).name(name).location(location).sku(sku).tags(tags)
-                .plan(plan).properties(properties)
-                .build();
-    }
-
-    public abstract Builder toBuilder();
-
-    private static Builder builder() {
-        return new AutoValue_VirtualMachineScaleSet.Builder();
-    }
+   /**
+    * Specifies the tags of the virtual machine scale set
+    */
+   @Nullable
+   public abstract Map<String, String> tags();
 
 
-    @AutoValue.Builder
-    public abstract static class Builder {
-        public abstract Builder id(String id);
-        public abstract Builder name(String name);
-        public abstract Builder location(String location);
-        public abstract Builder sku(VirtualMachineScaleSetSKU sku);
-        public abstract Builder tags(Map<String, String> tags);
-        public abstract Builder plan(VirtualMachineScaleSetPlan plan);
-        public abstract Builder properties(VirtualMachineScaleSetProperties properties);
+   /**
+    * Specifies the optional plan of the virtual machine scale set (only for market image)
+    */
+   @Nullable
+   public abstract VirtualMachineScaleSetPlan plan();
 
-        abstract Map<String, String> tags();
-        abstract VirtualMachineScaleSet autoBuild();
+   /**
+    * Specifies the properties of the availability set
+    */
+   @Nullable
+   public abstract VirtualMachineScaleSetProperties properties();
 
-        public VirtualMachineScaleSet build() {
-            tags(tags() != null ? ImmutableMap.copyOf(tags()) : null);
-            return autoBuild();
-        }
-    }
+   @SerializedNames({  "id", "name", "location", "sku", "tags", "plan", "properties"})
+   public static VirtualMachineScaleSet create(final String id, final String name, final String location,
+                                               VirtualMachineScaleSetSKU sku, final Map<String, String> tags,
+                                               VirtualMachineScaleSetPlan plan,
+                                               VirtualMachineScaleSetProperties properties) {
+      return builder().id(id).name(name).location(location).sku(sku).tags(tags)
+         .plan(plan).properties(properties)
+         .build();
+   }
+
+   public abstract Builder toBuilder();
+
+   private static Builder builder() {
+      return new AutoValue_VirtualMachineScaleSet.Builder();
+   }
+
+
+   @AutoValue.Builder
+   public abstract static class Builder {
+      public abstract Builder id(String id);
+      public abstract Builder name(String name);
+      public abstract Builder location(String location);
+      public abstract Builder sku(VirtualMachineScaleSetSKU sku);
+      public abstract Builder tags(Map<String, String> tags);
+      public abstract Builder plan(VirtualMachineScaleSetPlan plan);
+      public abstract Builder properties(VirtualMachineScaleSetProperties properties);
+
+      abstract Map<String, String> tags();
+      abstract VirtualMachineScaleSet autoBuild();
+
+      public VirtualMachineScaleSet build() {
+         tags(tags() != null ? ImmutableMap.copyOf(tags()) : null);
+         return autoBuild();
+      }
+   }
 }

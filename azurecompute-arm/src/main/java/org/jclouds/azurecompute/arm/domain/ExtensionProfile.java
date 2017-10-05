@@ -24,14 +24,14 @@ import java.util.List;
 @AutoValue
 public abstract class ExtensionProfile {
 
-    /**
-     * The Extensions of the extension profile
-     */
-    public abstract List<Extension> extensions();
+   /**
+    * The Extensions of the extension profile
+    */
+   public abstract List<Extension> extensions();
 
 
-    @SerializedNames({"extensions"})
-    public static ExtensionProfile create(final List<Extension> extensions) {
-        return new AutoValue_ExtensionProfile(extensions);
-    }
+   @SerializedNames({"extensions"})
+   public static ExtensionProfile create(final List<Extension> extensions) {
+      return new AutoValue_ExtensionProfile(extensions);
+   }
 }

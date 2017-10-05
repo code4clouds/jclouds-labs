@@ -16,7 +16,7 @@
  */
 package org.jclouds.azurecompute.arm.domain;
 
-        import com.google.auto.value.AutoValue;
+import com.google.auto.value.AutoValue;
 import org.jclouds.json.SerializedNames;
 
 import java.util.List;
@@ -24,28 +24,28 @@ import java.util.List;
 @AutoValue
 public abstract class VirtualMachineScaleSetNetworkProfile {
 
-    public abstract List<NetworkInterfaceConfiguration> networkInterfaceConfigurations();
+   public abstract List<NetworkInterfaceConfiguration> networkInterfaceConfigurations();
 
 
-    @SerializedNames({"networkInterfaceConfigurations"})
-    public static VirtualMachineScaleSetNetworkProfile create(final List<NetworkInterfaceConfiguration> networkInterfaceConfigurations) {
-        return builder()
-                .networkInterfaceConfigurations(networkInterfaceConfigurations)
-                .build();
-    }
+   @SerializedNames({"networkInterfaceConfigurations"})
+   public static VirtualMachineScaleSetNetworkProfile create(final List<NetworkInterfaceConfiguration> networkInterfaceConfigurations) {
+      return builder()
+         .networkInterfaceConfigurations(networkInterfaceConfigurations)
+         .build();
+   }
 
-    public abstract Builder toBuilder();
+   public abstract Builder toBuilder();
 
-    public static Builder builder() {
-        return new AutoValue_VirtualMachineScaleSetNetworkProfile.Builder();
-    }
+   public static Builder builder() {
+      return new AutoValue_VirtualMachineScaleSetNetworkProfile.Builder();
+   }
 
-    @AutoValue.Builder
-    public abstract static class Builder {
+   @AutoValue.Builder
+   public abstract static class Builder {
 
-        public abstract Builder networkInterfaceConfigurations(List<NetworkInterfaceConfiguration> networkInterfaceConfigurations);
+      public abstract Builder networkInterfaceConfigurations(List<NetworkInterfaceConfiguration> networkInterfaceConfigurations);
 
-        public abstract VirtualMachineScaleSetNetworkProfile build();
+      public abstract VirtualMachineScaleSetNetworkProfile build();
 
-    }
+   }
 }
