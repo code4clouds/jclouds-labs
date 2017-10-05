@@ -67,8 +67,6 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
 
     private String subscriptionid;
     private String vmssName;
-    private VirtualMachineScaleSetSKU SKU;
-    private String nicName;
     private String virtualNetworkName;
     private String subnetId;
     private Subnet subnet;
