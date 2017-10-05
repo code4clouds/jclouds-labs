@@ -26,22 +26,22 @@ import org.jclouds.json.SerializedNames;
 public abstract class VirtualMachineScaleSetVirtualMachineProfile {
 
    /**
-    * The Storage Profile of the virtual machine .
+    * The storage profile of the Virtual Machine Scale Set Virtual Machine Profile.
     */
    public abstract StorageProfile storageProfile();
 
    /**
-    * The OS Profile of the virtual machine .
+    * The OS profile of the Virtual Machine Scale Set Virtual Machine Profile.
     */
    public abstract VirtualMachineScaleSetOSProfile osProfile();
 
    /**
-    * The network profile of the VM
+    * The network profile of the Virtual Machine Scale Set Virtual Machine Profile
     */
    public abstract VirtualMachineScaleSetNetworkProfile networkProfile();
 
    /**
-    * The OS Extension of the virtual machine .
+    * The extension profile of the Virtual Machine Scale Set Virtual Machine Profile .
     */
    public abstract ExtensionProfile extensionProfile();
 

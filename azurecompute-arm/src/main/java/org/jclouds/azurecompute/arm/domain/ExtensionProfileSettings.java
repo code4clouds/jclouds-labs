@@ -27,13 +27,13 @@ import java.util.List;
 public abstract class ExtensionProfileSettings {
 
    /**
-    * The fileUris reference of the storage profile
+    * The fileUris reference of the extension profile settings
     */
    @Nullable
    public abstract List<String> fileUris();
 
    /**
-    * The image reference of the storage profile
+    * The commandToExecute of the storage profile settings
     */
    public abstract String commandToExecute();
 

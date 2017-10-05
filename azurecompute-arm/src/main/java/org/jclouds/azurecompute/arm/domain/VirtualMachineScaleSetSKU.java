@@ -24,18 +24,19 @@ import org.jclouds.json.SerializedNames;
  */
 @AutoValue
 public abstract class VirtualMachineScaleSetSKU {
+
    /**
-    * The name of the VirtualMachineScaleSetSKU
+    * The name of the Virtual Machine Scale Set SKU
     */
    public abstract String name();
 
    /**
-    * The location of the VirtualMachineScaleSetSKU
+    * The tier of the Virtual Machine Scale Set SKU
     */
    public abstract String tier();
 
    /**
-    * The id of the VirtualMachineScaleSetSKU
+    * The capacity of the Virtual Machine Scale Set SKU
     */
    public abstract int capacity();
 

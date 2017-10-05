@@ -25,6 +25,9 @@ import java.util.List;
 @AutoValue
 public abstract class VirtualMachineScaleSetNetworkProfile {
 
+   /**
+    * The network interface configurations of the Virtual Machine Scale Set Network Profile
+    */
    public abstract List<NetworkInterfaceConfiguration> networkInterfaceConfigurations();
 
 

@@ -23,6 +23,9 @@ import org.jclouds.json.SerializedNames;
 @AutoValue
 public abstract class VirtualMachineScaleSetPublicIPAddressProperties  {
 
+   /**
+    * The idle timeout (in minutes) of the Virtual Machine Scale Set Public IP Address Configuration
+    */
    @Nullable
    public abstract Integer idleTimeoutInMinutes();
 

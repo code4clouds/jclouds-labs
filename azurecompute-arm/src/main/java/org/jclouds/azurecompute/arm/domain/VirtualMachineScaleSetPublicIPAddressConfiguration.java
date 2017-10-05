@@ -23,7 +23,14 @@ import org.jclouds.json.SerializedNames;
 @AutoValue
 public abstract class VirtualMachineScaleSetPublicIPAddressConfiguration {
 
+   /**
+    * The name of the Virtual Machine Scale Set Public IP Address Configuration
+    */
    public abstract String name();
+
+   /**
+    * The properties of the Virtual Machine Scale Set Public IP Address Configuration
+    */
    public abstract VirtualMachineScaleSetPublicIPAddressProperties properties();
 
    @SerializedNames({ "name",  "properties" })
@@ -45,7 +52,9 @@ public abstract class VirtualMachineScaleSetPublicIPAddressConfiguration {
 
    @AutoValue.Builder
    public abstract static class Builder {
+
       public abstract Builder name(String name);
+
       public abstract Builder properties(VirtualMachineScaleSetPublicIPAddressProperties properties);
 
       abstract VirtualMachineScaleSetPublicIPAddressConfiguration autoBuild();

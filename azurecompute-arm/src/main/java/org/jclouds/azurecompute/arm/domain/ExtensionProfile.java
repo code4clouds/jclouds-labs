@@ -26,7 +26,7 @@ import java.util.List;
 public abstract class ExtensionProfile {
 
    /**
-    * The Extensions of the extension profile
+    * The list of extensions of the extension profile
     */
    public abstract List<Extension> extensions();
 

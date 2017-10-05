@@ -26,20 +26,38 @@ import java.util.List;
 @AutoValue
 public abstract class VirtualMachineScaleSetIpConfigurationProperties {
 
+   /**
+    * The public IP address configuration of the Virtual Machine Scale Set Ip Configuration Properties
+    */
    @Nullable
    public abstract VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration();
 
+   /**
+    * The subnet of the Virtual Machine Scale Set Ip Configuration Properties
+    */
    public abstract Subnet subnet();
 
+   /**
+    * The private IP address version of the Virtual Machine Scale Set Ip Configuration Properties
+    */
    @Nullable
    public abstract String privateIPAddressVersion();
 
+   /**
+    * The load balancer backend address pools of the Virtual Machine Scale Set Ip Configuration Properties
+    */
    @Nullable
    public abstract List<IdReference> loadBalancerBackendAddressPools();
 
+   /**
+    * The load balancer inbound nat pools of the Virtual Machine Scale Set Ip Configuration Properties
+    */
    @Nullable
    public abstract List<IdReference> loadBalancerInboundNatPools();
 
+   /**
+    * The application gateway backend address Pools of the Virtual Machine Scale Set Ip Configuration Properties
+    */
    @Nullable
    public abstract String applicationGatewayBackendAddressPools();
 

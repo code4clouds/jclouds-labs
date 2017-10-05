@@ -24,9 +24,15 @@ import org.jclouds.json.SerializedNames;
 @AutoValue
 public abstract class VirtualMachineScaleSetIpConfiguration {
 
+   /**
+    * The name of the Virtual Machine Scale Set Ip Configuration
+    */
    @Nullable
    public abstract String name();
 
+   /**
+    * The properties of the Virtual Machine Scale Set Ip Configuration
+    */
    @Nullable
    public abstract VirtualMachineScaleSetIpConfigurationProperties properties();
 

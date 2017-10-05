@@ -49,7 +49,7 @@ public abstract class VirtualMachineScaleSet {
    public abstract String location();
 
    /**
-    * Specifies the type of the virtual machine scale set
+    * Specifies the sku of the virtual machine scale set
     */
    public abstract VirtualMachineScaleSetSKU sku();
 

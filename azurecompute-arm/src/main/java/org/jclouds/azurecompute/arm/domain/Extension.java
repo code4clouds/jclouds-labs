@@ -23,7 +23,7 @@ import org.jclouds.json.SerializedNames;
 public abstract class Extension {
 
     /**
-     * The autoUpgradeMinorVersion reference of the extension profile
+     * The name reference of the extension profile
      */
     public abstract String name();
 

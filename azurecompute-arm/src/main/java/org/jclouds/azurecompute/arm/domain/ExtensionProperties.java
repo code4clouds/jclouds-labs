@@ -27,32 +27,32 @@ import java.util.Map;
 public abstract class ExtensionProperties {
 
    /**
-    * The autoUpgradeMinorVersion reference of the extension profile
+    * The publisher reference of the extension properties
     */
    public abstract String publisher();
 
    /**
-    * The autoUpgradeMinorVersion reference of the extension profile
+    * The type reference of the extension properties
     */
    public abstract String type();
 
    /**
-    * The autoUpgradeMinorVersion reference of the extension profile
+    * The typeHandlerVersion reference of the extension properties
     */
    public abstract String typeHandlerVersion();
 
    /**
-    * The autoUpgradeMinorVersion reference of the extension profile
+    * The autoUpgradeMinorVersion reference of the extension properties
     */
    public abstract Boolean autoUpgradeMinorVersion();
 
    /**
-    * The ExtensionProfileSettings of the extension profile
+    * The ExtensionProfileSettings of the extension properties
     */
    public abstract ExtensionProfileSettings settings();
 
    /**
-    * The list of the protectedSettings of the extension profile
+    * The list of the protectedSettings of the extension properties
     */
    @Nullable
    public abstract Map<String, String> protectedSettings();

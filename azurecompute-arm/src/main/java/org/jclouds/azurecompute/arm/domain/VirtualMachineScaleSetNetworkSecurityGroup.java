@@ -21,12 +21,12 @@ import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
 /**
- * VirtualMachineScaleSetNetworkSecurityGroup
+ * Virtual Machine Scale Set Network Security Group
  */
 @AutoValue
 public abstract class VirtualMachineScaleSetNetworkSecurityGroup {
    /**
-    * The name of the NetworkInterfaceConfiguration
+    * The id of the Virtual Machine Scale Set Network Security Group
     */
    @Nullable
    public abstract String id();

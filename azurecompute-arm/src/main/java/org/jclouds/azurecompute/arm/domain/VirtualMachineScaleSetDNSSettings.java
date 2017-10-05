@@ -29,7 +29,7 @@ import java.util.List;
 @AutoValue
 public abstract class VirtualMachineScaleSetDNSSettings {
    /**
-    * The name of the NetworkInterfaceConfiguration
+    * The list of DNS servers of the Virtual Machine Scale Set DNS Settings
     */
    @Nullable
    public abstract List<String> dnsServers();

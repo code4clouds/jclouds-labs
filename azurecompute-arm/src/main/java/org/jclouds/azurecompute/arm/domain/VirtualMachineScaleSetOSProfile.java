@@ -30,15 +30,22 @@ public abstract class VirtualMachineScaleSetOSProfile {
    @AutoValue
    public abstract static class LinuxConfiguration {
 
+
       @AutoValue
       public abstract static class SSH {
 
          @AutoValue
          public abstract static class SSHPublicKey {
 
+            /**
+             * The path for the SSH public key
+             */
             @Nullable
             public abstract String path();
 
+            /**
+             * The key data for the SSH public key
+             */
             @Nullable
             public abstract String keyData();
 
@@ -114,8 +121,14 @@ public abstract class VirtualMachineScaleSetOSProfile {
          @AutoValue
          public abstract static class ProtocolListener {
 
+            /**
+             * The protocol for the protcol listener
+             */
             public abstract Protocol protocol();
 
+            /**
+             * The certificate url or the protcol listener
+             */
             @Nullable
             public abstract String certificateUrl();
 
