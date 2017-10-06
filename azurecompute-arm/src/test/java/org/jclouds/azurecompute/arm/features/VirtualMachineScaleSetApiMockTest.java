@@ -16,10 +16,7 @@
  */
 package org.jclouds.azurecompute.arm.features;
 
-//import com.google.common.base.Predicate;
-//import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-//import com.squareup.okhttp.mockwebserver.MockResponse;
 import org.jclouds.azurecompute.arm.domain.DataDisk;
 import org.jclouds.azurecompute.arm.domain.Extension;
 import org.jclouds.azurecompute.arm.domain.ExtensionProfile;
@@ -35,12 +32,7 @@ import org.jclouds.azurecompute.arm.domain.NetworkInterfaceCardProperties;
 import org.jclouds.azurecompute.arm.domain.NetworkInterfaceConfiguration;
 import org.jclouds.azurecompute.arm.domain.NetworkInterfaceConfigurationProperties;
 import org.jclouds.azurecompute.arm.domain.NetworkProfile;
-//import org.jclouds.azurecompute.arm.domain.NetworkProfile.NetworkInterface;
 import org.jclouds.azurecompute.arm.domain.OSDisk;
-//import org.jclouds.azurecompute.arm.domain.OSProfile.LinuxConfiguration;
-//import org.jclouds.azurecompute.arm.domain.OSProfile.WindowsConfiguration.AdditionalUnattendContent;
-//import org.jclouds.azurecompute.arm.domain.OSProfile.WindowsConfiguration.WinRM.Protocol;
-//import org.jclouds.azurecompute.arm.domain.Secrets.SourceVault;
 import org.jclouds.azurecompute.arm.domain.StorageProfile;
 import org.jclouds.azurecompute.arm.domain.Subnet;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSet;
@@ -60,18 +52,12 @@ import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetVirtualMachineP
 import org.jclouds.azurecompute.arm.internal.BaseAzureComputeApiMockTest;
 import org.testng.annotations.Test;
 
-//import java.net.URI;
-//import java.text.DateFormat;
-//import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//import static com.google.common.collect.Iterables.isEmpty;
-//import static org.jclouds.util.Predicates2.retry;
-//import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 
