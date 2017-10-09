@@ -22,19 +22,19 @@ import org.jclouds.json.SerializedNames;
 @AutoValue
 public abstract class Extension {
 
-    /**
-     * The name reference of the extension profile
-     */
-    public abstract String name();
+   /**
+    * The name reference of the extension profile
+    */
+   public abstract String name();
 
-    /**
-     * The properties reference of the extension profile
-     */
-    public abstract ExtensionProperties properties();
+   /**
+    * The properties reference of the extension profile
+    */
+   public abstract ExtensionProperties properties();
 
 
-    @SerializedNames({"name", "properties"})
-    public static Extension create(final String name, final ExtensionProperties properties) {
-        return new AutoValue_Extension(name, properties);
-    }
+   @SerializedNames({"name", "properties"})
+   public static Extension create(final String name, final ExtensionProperties properties) {
+      return new AutoValue_Extension(name, properties);
+   }
 }
