@@ -22,10 +22,10 @@ public class VirtualMachineScaleSetUpgradeMode {
    public enum Status {
       Manual,
       Automatic,
-      UNRECOGNIZED;
+      Unrecognized;
 
       public static Status fromValue(final String text) {
-         return (Status) GetEnumValue.fromValueOrDefault(text, Status.UNRECOGNIZED);
+         return (Status) GetEnumValue.fromValueOrDefault(text, Status.Unrecognized);
       }
    }
 }

@@ -43,7 +43,7 @@ public abstract class VirtualMachineScaleSetPlan {
    @Nullable
    public abstract String product();
 
-   @SerializedNames({"name", "tier", "capacity"})
+   @SerializedNames({"name", "publisher", "product"})
    public static VirtualMachineScaleSetPlan create(final String name, final String publisher, final String product) {
 
       return new AutoValue_VirtualMachineScaleSetPlan(name, publisher, product);

@@ -26,7 +26,7 @@ import org.jclouds.json.SerializedNames;
 @AutoValue
 public abstract class VirtualMachineScaleSetUpgradePolicy {
    /**
-    * The name of the Virtual Machine Scale Set Upgrade Policy
+    * The mode of the Virtual Machine Scale Set Upgrade Policy
     */
    @Nullable
    public abstract String mode();
