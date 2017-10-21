@@ -20,15 +20,12 @@ import com.google.auto.value.AutoValue;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
-/**
- * SKU
- */
+
 @AutoValue
 public abstract class VirtualMachineScaleSetUpgradePolicy {
    /**
     * The mode of the Virtual Machine Scale Set Upgrade Policy
     */
-   @Nullable
    public abstract String mode();
 
    @SerializedNames({"mode"})
