@@ -51,8 +51,30 @@ public abstract class VirtualMachineScaleSetProperties {
       final Boolean overProvision,
       final VirtualMachineScaleSetUpgradePolicy upgradePolicy,
       final VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile) {
-         return new AutoValue_VirtualMachineScaleSetProperties(
-            singlePlacementGroup, overProvision, upgradePolicy, virtualMachineProfile);
+      return builder().singlePlacementGroup(singlePlacementGroup).overProvision(overProvision).
+         upgradePolicy(upgradePolicy).virtualMachineProfile(virtualMachineProfile).build();
    }
+
+   public abstract Builder toBuilder();
+
+   private static Builder builder() {
+      return new AutoValue_VirtualMachineScaleSetProperties.Builder();
+   }
+
+   @AutoValue.Builder
+   public abstract static class Builder {
+      public abstract Builder singlePlacementGroup(Boolean singlePlacementGroup);
+      public abstract Builder overProvision(Boolean overProvision);
+      public abstract Builder upgradePolicy(VirtualMachineScaleSetUpgradePolicy upgradePolicy);
+      public abstract Builder virtualMachineProfile(VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile);
+
+      abstract VirtualMachineScaleSetProperties autoBuild();
+
+      public VirtualMachineScaleSetProperties build() {
+         return autoBuild();
+      }
+   }
+
+
 }
 

@@ -18,7 +18,11 @@ package org.jclouds.azurecompute.arm.domain;
 
 import org.jclouds.azurecompute.arm.util.GetEnumValue;
 
+
 public class VirtualMachineScaleSetUpgradeMode {
+   /**
+    * VirtualMachineScaleSetUpgradeMode
+    * **/
    public enum Status {
       Manual,
       Automatic,
