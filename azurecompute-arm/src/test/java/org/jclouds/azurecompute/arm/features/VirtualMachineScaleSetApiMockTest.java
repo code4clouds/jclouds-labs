@@ -107,6 +107,4 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
          .size(), 1);
    }
 
-
-
 }
