@@ -33,7 +33,7 @@ public abstract class ExtensionProfileSettings {
    public abstract List<String> fileUris();
 
    /**
-    * The commandToExecute of the storage profile settings
+    * The commandToExecute of the extension profile settings
     */
    public abstract String commandToExecute();
 
