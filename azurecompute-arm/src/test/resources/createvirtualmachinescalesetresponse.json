@@ -58,6 +58,6 @@
   "tags": {
     "test": "test"
   },
-  "id": "/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxxx/resourceGroups/jcloud-eastus/providers/Microsoft.Compute/virtualMachineScaleSets/jclouds-vmssname",
+  "id": "/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxxx/resourceGroups/myresourcegroup/providers/Microsoft.Compute/virtualMachineScaleSets/jclouds-vmssname",
   "name": "jclouds-vmssname"
 }
