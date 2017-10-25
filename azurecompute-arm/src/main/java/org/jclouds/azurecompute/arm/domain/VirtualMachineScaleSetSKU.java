@@ -19,9 +19,7 @@ package org.jclouds.azurecompute.arm.domain;
 import com.google.auto.value.AutoValue;
 import org.jclouds.json.SerializedNames;
 
-/**
- * SKU
- */
+
 @AutoValue
 public abstract class VirtualMachineScaleSetSKU {
 

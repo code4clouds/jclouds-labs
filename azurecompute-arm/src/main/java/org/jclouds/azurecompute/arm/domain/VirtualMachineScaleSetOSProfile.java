@@ -178,7 +178,7 @@ public abstract class VirtualMachineScaleSetOSProfile {
       public abstract boolean provisionVMAgent();
 
       /**
-       * winR
+       * winRM
        */
       @Nullable
       public abstract WinRM winRM();
@@ -200,7 +200,7 @@ public abstract class VirtualMachineScaleSetOSProfile {
                                                 final boolean enableAutomaticUpdates) {
 
          return new AutoValue_VirtualMachineScaleSetOSProfile_WindowsConfiguration(provisionVMAgent, winRM,
-            additionalUnattendContent, enableAutomaticUpdates);
+            additionalUnattendContent == null ? ImmutableList.<AdditionalUnattendContent>of() : ImmutableList.copyOf(additionalUnattendContent), enableAutomaticUpdates);
       }
    }
 
@@ -251,7 +251,7 @@ public abstract class VirtualMachineScaleSetOSProfile {
          .adminPassword(adminPassword)
          .linuxConfiguration(linuxConfiguration)
          .windowsConfiguration(windowsConfiguration)
-         .secrets(secrets)
+         .secrets(secrets == null ? ImmutableList.<Secrets>of() : ImmutableList.copyOf(secrets) )
          .build();
    }
 

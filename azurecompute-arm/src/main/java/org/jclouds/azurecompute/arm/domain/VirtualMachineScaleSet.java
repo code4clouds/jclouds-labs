@@ -103,7 +103,7 @@ public abstract class VirtualMachineScaleSet {
       abstract VirtualMachineScaleSet autoBuild();
 
       public VirtualMachineScaleSet build() {
-         tags(tags() == null ? ImmutableMap.<String, String>of() : ImmutableMap.copyOf(tags()));
+         tags(tags() != null ? ImmutableMap.copyOf(tags()) : null);
          return autoBuild();
       }
    }

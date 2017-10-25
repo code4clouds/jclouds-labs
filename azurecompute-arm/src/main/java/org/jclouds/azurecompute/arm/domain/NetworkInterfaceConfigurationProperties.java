@@ -23,9 +23,7 @@ import org.jclouds.json.SerializedNames;
 
 import java.util.List;
 
-/**
- * NetworkInterfaceConfigurationProperty
- */
+
 @AutoValue
 public abstract class NetworkInterfaceConfigurationProperties {
    /**
@@ -47,7 +45,7 @@ public abstract class NetworkInterfaceConfigurationProperties {
    public abstract VirtualMachineScaleSetNetworkSecurityGroup networkSecurityGroup();
 
    /**
-    * The dnsSettings of the VirtualMachineScaleSetDNSSettings
+    * The dnsSettings of the NetworkInterfaceConfigurationProperties
     */
    @Nullable
    public abstract VirtualMachineScaleSetDNSSettings dnsSettings();
