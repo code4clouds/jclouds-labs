@@ -251,7 +251,7 @@ public abstract class VirtualMachineScaleSetOSProfile {
          .adminPassword(adminPassword)
          .linuxConfiguration(linuxConfiguration)
          .windowsConfiguration(windowsConfiguration)
-         .secrets(secrets == null ? ImmutableList.<Secrets>of() : ImmutableList.copyOf(secrets) )
+         .secrets(secrets)
          .build();
    }
 
@@ -264,17 +264,18 @@ public abstract class VirtualMachineScaleSetOSProfile {
    @AutoValue.Builder
    public abstract static class Builder {
       public abstract Builder computerNamePrefix(String computerNamePrefix);
-
       public abstract Builder adminUsername(String adminUsername);
-
       public abstract Builder adminPassword(String adminPassword);
-
       public abstract Builder linuxConfiguration(LinuxConfiguration linuxConfiguration);
-
       public abstract Builder windowsConfiguration(WindowsConfiguration windowsConfiguration);
-
       public abstract Builder secrets(List<Secrets> secrets);
 
-      public abstract VirtualMachineScaleSetOSProfile build();
+      abstract List<Secrets> secrets();
+      abstract VirtualMachineScaleSetOSProfile autoBuild();
+
+      public VirtualMachineScaleSetOSProfile build() {
+         secrets(secrets() == null ? ImmutableList.<Secrets>of() : ImmutableList.copyOf(secrets()) );
+         return autoBuild();
+      }
    }
 }
