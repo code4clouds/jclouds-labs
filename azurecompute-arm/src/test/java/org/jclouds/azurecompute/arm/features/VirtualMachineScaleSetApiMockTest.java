@@ -98,6 +98,12 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
          .storageAccountType().toString(), "Standard_LRS");
    }
 
+   public void testVMSSCreate_PropertyUpgradePolicy() throws InterruptedException {
+      server.enqueue(jsonResponse("/createvirtualmachinescalesetresponse.json").setResponseCode(200));
+      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
+      assertEquals(vmssAPI.get("jclouds-vmssname").properties().upgradePolicy().mode(), "Manual");
+   }
+
    public void testVMSSCreate_NetworkProfile() throws InterruptedException {
       server.enqueue(jsonResponse("/createvirtualmachinescalesetresponse.json").setResponseCode(200));
       final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);

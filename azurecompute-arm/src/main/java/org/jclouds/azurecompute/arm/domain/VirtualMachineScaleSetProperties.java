@@ -68,11 +68,8 @@ public abstract class VirtualMachineScaleSetProperties {
       public abstract Builder upgradePolicy(VirtualMachineScaleSetUpgradePolicy upgradePolicy);
       public abstract Builder virtualMachineProfile(VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile);
 
-      abstract VirtualMachineScaleSetProperties autoBuild();
 
-      public VirtualMachineScaleSetProperties build() {
-         return autoBuild();
-      }
+      public abstract VirtualMachineScaleSetProperties build();
    }
 
 
