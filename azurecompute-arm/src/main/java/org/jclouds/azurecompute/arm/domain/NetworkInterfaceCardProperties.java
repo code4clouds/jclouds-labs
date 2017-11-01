@@ -41,8 +41,7 @@ public abstract class NetworkInterfaceCardProperties implements Provisionable {
               .provisioningState(provisioningState)
               .resourceGuid(resourceGuid)
               .enableIPForwarding(enableIPForwarding)
-              .ipConfigurations(ipConfigurations == null ?
-                 ImmutableList.<IpConfiguration>of() : ImmutableList.copyOf(ipConfigurations))
+              .ipConfigurations(ipConfigurations == null ? null : ImmutableList.copyOf(ipConfigurations))
               .networkSecurityGroup(networkSecurityGroup);
 
       return builder.build();

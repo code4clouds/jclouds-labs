@@ -52,15 +52,8 @@ public abstract class VirtualMachineScaleSetPublicIPAddressConfiguration {
 
    @AutoValue.Builder
    public abstract static class Builder {
-
       public abstract Builder name(String name);
-
       public abstract Builder properties(VirtualMachineScaleSetPublicIPAddressProperties properties);
-
-      abstract VirtualMachineScaleSetPublicIPAddressConfiguration autoBuild();
-
-      public VirtualMachineScaleSetPublicIPAddressConfiguration build() {
-         return autoBuild();
-      }
+      public abstract VirtualMachineScaleSetPublicIPAddressConfiguration build();
    }
 }

@@ -43,7 +43,7 @@ public abstract class NetworkSecurityGroup {
    @SerializedNames({ "id", "name", "location", "tags", "properties", "etag" })
    public static NetworkSecurityGroup create(final String id, final String name, final String location,
          final Map<String, String> tags, final NetworkSecurityGroupProperties properties, final String etag) {
-      return new AutoValue_NetworkSecurityGroup(id, name, location, (tags == null) ? ImmutableMap.<String, String>of() : ImmutableMap.copyOf(tags),
+      return new AutoValue_NetworkSecurityGroup(id, name, location, (tags == null) ? null : ImmutableMap.copyOf(tags),
             properties, etag);
    }
 }

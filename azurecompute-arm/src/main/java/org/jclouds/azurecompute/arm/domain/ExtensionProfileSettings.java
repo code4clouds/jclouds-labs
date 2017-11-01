@@ -18,7 +18,6 @@ package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
 import java.util.List;
@@ -29,7 +28,6 @@ public abstract class ExtensionProfileSettings {
    /**
     * The fileUris reference of the extension profile settings
     */
-   @Nullable
    public abstract List<String> fileUris();
 
    /**
