@@ -186,7 +186,6 @@ public abstract class VirtualMachineScaleSetOSProfile {
       /**
        * unattend content
        */
-      @Nullable
       public abstract List<AdditionalUnattendContent> additionalUnattendContent();
 
       /**
@@ -237,7 +236,6 @@ public abstract class VirtualMachineScaleSetOSProfile {
    /**
     * The Secrets configuration of the VM
     */
-   @Nullable
    public abstract List<Secrets> secrets();
 
    @SerializedNames({"computerNamePrefix", "adminUsername", "adminPassword", "linuxConfiguration",

@@ -18,7 +18,6 @@ package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
 import java.util.List;
@@ -31,7 +30,6 @@ public abstract class VirtualMachineScaleSetDNSSettings {
    /**
     * The list of DNS servers of the Virtual Machine Scale Set DNS Settings
     */
-   @Nullable
    public abstract List<String> dnsServers();
 
    @SerializedNames({"dnsServers"})

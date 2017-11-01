@@ -53,7 +53,6 @@ public abstract class NetworkInterfaceConfigurationProperties {
    /**
     * The ipConfigurations of the NetworkInterfaceConfigurationProperties
     */
-   @Nullable
    public abstract List<VirtualMachineScaleSetIpConfiguration> ipConfigurations();
 
 

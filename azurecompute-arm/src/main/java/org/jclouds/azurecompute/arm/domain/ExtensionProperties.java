@@ -18,7 +18,6 @@ package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableMap;
-import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
 import java.util.Map;
@@ -54,7 +53,6 @@ public abstract class ExtensionProperties {
    /**
     * The list of the protectedSettings of the extension properties
     */
-   @Nullable
    public abstract Map<String, String> protectedSettings();
 
    @SerializedNames({ "publisher", "type", "typeHandlerVersion",
