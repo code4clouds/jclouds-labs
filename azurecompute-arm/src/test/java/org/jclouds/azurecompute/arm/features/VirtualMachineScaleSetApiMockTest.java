@@ -176,15 +176,15 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
               + "/VirtualMachineScaleSets?api-version=2017-03-30");
    }
 
-   public void testListWhen404() throws InterruptedException {
-//      server.enqueue(response404());
-      server.enqueue(jsonResponse("/virtualmachinescalesetlistwhen404.json").setResponseCode(404));
-      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup+"1");
-      assertSent(server, "GET", "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup1/providers/Microsoft.Compute"
-              + "/VirtualMachineScaleSets?api-version=2017-03-30");
-      assertEquals(vmssAPI.list().size(),0);
-      assertTrue(isEmpty(vmssAPI.list()));
-   }
+//   public void testListWhen404() throws InterruptedException {
+////      server.enqueue(response404());
+//      server.enqueue(jsonResponse("/virtualmachinescalesetlistwhen404.json").setResponseCode(404));
+//      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup+"1");
+//      assertSent(server, "GET", "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup1/providers/Microsoft.Compute"
+//              + "/VirtualMachineScaleSets?api-version=2017-03-30");
+//      assertEquals(vmssAPI.list().size(),0);
+//      assertTrue(isEmpty(vmssAPI.list()));
+//   }
 
 
 //   public void testDeleteWhen404() throws InterruptedException {
