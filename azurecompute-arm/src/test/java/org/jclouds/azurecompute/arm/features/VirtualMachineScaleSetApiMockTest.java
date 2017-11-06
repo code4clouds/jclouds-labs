@@ -16,8 +16,11 @@
  */
 package org.jclouds.azurecompute.arm.features;
 
+import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSet;
 import org.jclouds.azurecompute.arm.internal.BaseAzureComputeApiMockTest;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 import static com.google.common.collect.Iterables.isEmpty;
 import static org.testng.Assert.assertEquals;
@@ -28,6 +31,7 @@ import static org.testng.Assert.assertTrue;
 public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTest {
 
    private final String resourcegroup = "myresourcegroup";
+   private final String vmssname = "jclouds-vmssname";
 
    public void testGet() throws InterruptedException {
       server.enqueue(jsonResponse("/virtualmachinescalesetget.json").setResponseCode(200));
@@ -38,13 +42,13 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
             + "/VirtualMachineScaleSets/jclouds-vmssname?api-version=2017-03-30");
    }
 
-//   public void testGetWhen404() throws InterruptedException {
-//      server.enqueue(response404());
-////      server.enqueue(jsonResponse("/virtualmachinescalesetgetwhen404.json").setResponseCode(404));
-//      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-//      assertSent(server, "GET", "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/Microsoft.Compute"
-//              + "/VirtualMachineScaleSets/jclouds-vmssname1?api-version=2017-03-30");
-//   }
+   public void testGetWhen404() throws InterruptedException {
+      server.enqueue(jsonResponse("/virtualmachinescalesetgetwhen404.json").setResponseCode(404));
+      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
+      vmssAPI.get(vmssname+1);
+      assertSent(server, "GET", "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/Microsoft.Compute"
+              + "/VirtualMachineScaleSets/jclouds-vmssname1?api-version=2017-03-30");
+   }
 
    public void testGet_BaseProperty() throws InterruptedException {
       server.enqueue(jsonResponse("/virtualmachinescalesetget.json").setResponseCode(200));
@@ -171,37 +175,36 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
    public void testList() throws InterruptedException {
       server.enqueue(jsonResponse("/virtualmachinescalesetlist.json").setResponseCode(200));
       final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      assertEquals(vmssAPI.list().size(),1);
       assertSent(server, "GET", "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/Microsoft.Compute"
               + "/VirtualMachineScaleSets?api-version=2017-03-30");
+      assertEquals(vmssAPI.list().size(),1);
    }
 
-//   public void testListWhen404() throws InterruptedException {
-////      server.enqueue(response404());
-//      server.enqueue(jsonResponse("/virtualmachinescalesetlistwhen404.json").setResponseCode(404));
-//      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup+"1");
-//      assertSent(server, "GET", "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup1/providers/Microsoft.Compute"
-//              + "/VirtualMachineScaleSets?api-version=2017-03-30");
-//      assertEquals(vmssAPI.list().size(),0);
-//      assertTrue(isEmpty(vmssAPI.list()));
-//   }
+   public void testListWhen404() throws InterruptedException {
+      server.enqueue(jsonResponse("/virtualmachinescalesetlistwhen404.json").setResponseCode(404));
+      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup+"1");
+      List<VirtualMachineScaleSet> vmssList = vmssAPI.list();
+      assertSent(server, "GET", "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup1/providers/Microsoft.Compute"
+              + "/VirtualMachineScaleSets?api-version=2017-03-30");
+      assertTrue(isEmpty(vmssList));
+   }
 
 
-//   public void testDeleteWhen404() throws InterruptedException {
-//      server.enqueue(jsonResponse("/virtualmachinescalesetlist.json").setResponseCode(404));
-//      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-//      assertEquals(vmssAPI.list().size(),1);
-//      assertSent(server, "GET", "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/Microsoft.Compute"
-//              + "/VirtualMachineScaleSets?api-version=2017-03-30");
-//   }
-//
-//   public void testDelete() throws InterruptedException {
-//      server.enqueue(jsonResponse("/virtualmachinescalesetlist.json").setResponseCode(200));
-//      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-//      assertEquals(vmssAPI.list().size(),1);
-//      assertSent(server, "GET", "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/Microsoft.Compute"
-//              + "/VirtualMachineScaleSets?api-version=2017-03-30");
-//   }
+   public void testDeleteWhen404() throws InterruptedException {
+      server.enqueue(jsonResponse("/virtualmachinescalesetlist.json").setResponseCode(404));
+      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
+      vmssAPI.delete(vmssname);
+      assertSent(server, "DELETE", "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/Microsoft.Compute"
+              + "/VirtualMachineScaleSets/jclouds-vmssname?api-version=2017-03-30");
+   }
+
+   public void testDelete() throws InterruptedException {
+      server.enqueue(response202WithHeader());
+      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
+      vmssAPI.delete("jclouds-vmssname");
+      assertSent(server, "DELETE", "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/Microsoft.Compute"
+              + "/VirtualMachineScaleSets/jclouds-vmssname?api-version=2017-03-30");
+   }
 
 
 }
