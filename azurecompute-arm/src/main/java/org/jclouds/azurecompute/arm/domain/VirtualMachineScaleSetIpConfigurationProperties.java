@@ -112,20 +112,6 @@ public abstract class VirtualMachineScaleSetIpConfigurationProperties {
 
       public abstract Builder applicationGatewayBackendAddressPools(String applicationGatewayBackendAddressPools);
 
-//      abstract List<IdReference> loadBalancerBackendAddressPools();
-//
-//      abstract List<IdReference> loadBalancerInboundNatPools();
-//
-//      abstract VirtualMachineScaleSetIpConfigurationProperties autoBuild();
-
-//      public VirtualMachineScaleSetIpConfigurationProperties build() {
-//         loadBalancerBackendAddressPools(loadBalancerBackendAddressPools() != null ? ImmutableList
-//            .copyOf(loadBalancerBackendAddressPools()) : ImmutableList.<IdReference>of());
-//         loadBalancerInboundNatPools(loadBalancerInboundNatPools() != null ? ImmutableList
-//            .copyOf(loadBalancerInboundNatPools()) : ImmutableList.<IdReference>of());
-//         return autoBuild();
-//      }
-
       public abstract VirtualMachineScaleSetIpConfigurationProperties build();
 
    }
