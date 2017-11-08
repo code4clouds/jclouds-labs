@@ -72,7 +72,6 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
       server.enqueue(jsonResponse("/virtualmachinescalesetget.json").setResponseCode(200));
       final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
       assertEquals(vmssAPI.get(vmssname).name(), vmssname);
-
       assertSent(server,
               "GET", "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/" +
                       "providers/Microsoft.Compute"
@@ -91,73 +90,6 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
       assertNull(vmss);
    }
 
-   public void testGet_BaseProperty() throws InterruptedException {
-      server.enqueue(jsonResponse("/virtualmachinescalesetget.json").setResponseCode(200));
-      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      assertEquals(vmssAPI.get(vmssname).name(), vmssname);
-
-      assertSent(server,
-              "GET",
-              "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/" +
-                      "Microsoft.Compute"
-              + "/VirtualMachineScaleSets/" + vmssname + "?api-version=2017-03-30");
-   }
-
-   public void testGet_SKUProperty() throws InterruptedException {
-      server.enqueue(jsonResponse("/virtualmachinescalesetget.json").setResponseCode(200));
-      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      assertEquals(vmssAPI.get(vmssname).sku().name(), "Standard_A1");
-
-      assertSent(server,
-              "GET",
-              "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/" +
-                      "Microsoft.Compute"
-              + "/VirtualMachineScaleSets/" + vmssname + "?api-version=2017-03-30");
-   }
-
-   public void testGet_Property() throws InterruptedException {
-      server.enqueue(jsonResponse("/virtualmachinescalesetget.json").setResponseCode(200));
-      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      assertEquals(vmssAPI.get("jclouds-vmssname").properties().singlePlacementGroup().booleanValue(), true);
-
-      assertSent(server,
-              "GET",
-              "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/" +
-                      "Microsoft.Compute"
-              + "/VirtualMachineScaleSets/" + vmssname + "?api-version=2017-03-30");
-   }
-
-   public void testGet_StorageProfile() throws InterruptedException {
-      server.enqueue(jsonResponse("/virtualmachinescalesetget.json").setResponseCode(200));
-      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      assertEquals(vmssAPI.get(vmssname).properties().virtualMachineProfile()
-         .storageProfile()
-         .osDisk()
-         .managedDiskParameters()
-         .storageAccountType().toString(), "Standard_LRS");
-
-      assertSent(server,
-              "GET",
-              "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/" +
-                      "Microsoft.Compute"
-              + "/VirtualMachineScaleSets/" + vmssname + "?api-version=2017-03-30");
-   }
-
-   public void testGet_NetworkProfile() throws InterruptedException {
-      server.enqueue(jsonResponse("/virtualmachinescalesetget.json").setResponseCode(200));
-      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      assertEquals(vmssAPI.get(vmssname).properties().virtualMachineProfile()
-         .networkProfile()
-         .networkInterfaceConfigurations()
-         .size(), 1);
-
-      assertSent(server,
-              "GET",
-              "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/" +
-                      "Microsoft.Compute"
-              + "/VirtualMachineScaleSets/" + vmssname + "?api-version=2017-03-30");
-   }
-
    public void testCreateOrUpdate() throws InterruptedException {
       server.enqueue(
               jsonResponse(
@@ -170,81 +102,114 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
               "PUT",
               "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/" +
                       "Microsoft.Compute"
-                      + "/VirtualMachineScaleSets/" + vmssname + "?api-version=2017-03-30");
-   }
-
-
-   public void testCreateOrUpdate_BaseProperty() throws InterruptedException {
-      server.enqueue(
-              jsonResponse(
-                      "/virtualmachinescalesetresponsecreateorupdate.json").setResponseCode(200));
-      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      assertEquals(CreateOrUpdateVMSS(vmssAPI).location(), "eastus");
-
-      assertSent(server, "PUT", "/subscriptions/SUBSCRIPTIONID/resourceGroups/" +
-              "myresourcegroup/providers/Microsoft.Compute"
-              + "/VirtualMachineScaleSets/" + vmssname + "?api-version=2017-03-30");
-   }
-
-
-
-
-   public void testCreateOrUpdate_Property() throws InterruptedException {
-      server.enqueue(
-              jsonResponse(
-                      "/virtualmachinescalesetresponsecreateorupdate.json").setResponseCode(200));
-      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      assertEquals(CreateOrUpdateVMSS(vmssAPI).properties().singlePlacementGroup().booleanValue(), true);
-
-      assertSent(server,
-              "PUT",
-              "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/" +
-                      "Microsoft.Compute"
-              + "/VirtualMachineScaleSets/" + vmssname + "?api-version=2017-03-30");
-   }
-
-   public void testCreateOrUpdate_StorageProfile() throws InterruptedException {
-      server.enqueue(
-              jsonResponse(
-                      "/virtualmachinescalesetresponsecreateorupdate.json").setResponseCode(200));
-      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      assertEquals(CreateOrUpdateVMSS(vmssAPI).properties().virtualMachineProfile()
-         .storageProfile()
-         .osDisk()
-         .managedDiskParameters()
-         .storageAccountType().toString(), "Standard_LRS");
-
-      assertSent(server,
-              "PUT",
-              "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/Microsoft.Compute"
-              + "/VirtualMachineScaleSets/" + vmssname + "?api-version=2017-03-30");
-   }
-
-   public void testCreateOrUpdate_PropertyUpgradePolicy() throws InterruptedException {
-      server.enqueue(jsonResponse("/virtualmachinescalesetresponsecreateorupdate.json").setResponseCode(200));
-      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      assertEquals(CreateOrUpdateVMSS(vmssAPI).properties().upgradePolicy().mode(), "Manual");
-
-      assertSent(server,
-              "PUT",
-              "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/Microsoft.Compute"
-              + "/VirtualMachineScaleSets/" + vmssname + "?api-version=2017-03-30");
-   }
-
-   public void testCreateOrUpdate_NetworkProfile() throws InterruptedException {
-      server.enqueue(
-              jsonResponse("/virtualmachinescalesetresponsecreateorupdate.json").setResponseCode(200));
-      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      assertEquals(CreateOrUpdateVMSS(vmssAPI).properties().virtualMachineProfile()
-         .networkProfile()
-         .networkInterfaceConfigurations()
-         .size(), 1);
-
-      assertSent(server,
-              "PUT",
-              "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/" +
-                      "Microsoft.Compute"
-              + "/VirtualMachineScaleSets/jclouds-vmssname?api-version=2017-03-30");
+                      + "/VirtualMachineScaleSets/" + vmssname + "?api-version=2017-03-30",
+              "{\n" +
+                      "  \"location\": \"eastus\",\n" +
+                      "  \"sku\": {\n" +
+                      "    \"name\": \"Standard_A1\",\n" +
+                      "    \"tier\": \"Standard\",\n" +
+                      "    \"capacity\": 10\n" +
+                      "  },\n" +
+                      "  \"properties\": {\n" +
+                      "    \"singlePlacementGroup\": true,\n" +
+                      "    \"overProvision\": true,\n" +
+                      "    \"upgradePolicy\": {\n" +
+                      "      \"mode\": \"Manual\"\n" +
+                      "    },\n" +
+                      "    \"virtualMachineProfile\": {\n" +
+                      "      \"storageProfile\": {\n" +
+                      "        \"imageReference\": {\n" +
+                      "          \"publisher\": \"Canonical\",\n" +
+                      "          \"offer\": \"UbuntuServer\",\n" +
+                      "          \"sku\": \"16.04-LTS\",\n" +
+                      "          \"version\": \"latest\"\n" +
+                      "        },\n" +
+                      "        \"osDisk\": {\n" +
+                      "          \"osType\": \"Windows\",\n" +
+                      "          \"createOption\": \"FromImage\",\n" +
+                      "          \"managedDisk\": {\n" +
+                      "            \"storageAccountType\": \"Standard_LRS\"\n" +
+                      "          }\n" +
+                      "        },\n" +
+                      "        \"dataDisks\": [{\n" +
+                      "          \"diskSizeGB\": \"10\",\n" +
+                      "          \"lun\": 1,\n" +
+                      "          \"createOption\": \"Unrecognized\",\n" +
+                      "          \"caching\": \"None\",\n" +
+                      "          \"managedDisk\": {\n" +
+                      "            \"storageAccountType\": \"Standard_LRS\"\n" +
+                      "          }\n" +
+                      "        }\n" +
+                      "        ]\n" +
+                      "      },\n" +
+                      "      \"osProfile\": {\n" +
+                      "        \"computerNamePrefix\": \"jclouds-vmssname\",\n" +
+                      "        \"adminUsername\": \"admin\",\n" +
+                      "        \"adminPassword\": \"password\",\n" +
+                      "        \"linuxConfiguration\": {\n" +
+                      "          \"disablePasswordAuthentication\": false\n" +
+                      "        },\n" +
+                      "        \"secrets\": []\n" +
+                      "      },\n" +
+                      "      \"networkProfile\": {\n" +
+                      "        \"networkInterfaceConfigurations\": [{\n" +
+                      "          \"name\": \"nicconfig1\",\n" +
+                      "          \"properties\": {\n" +
+                      "            \"primary\": true,\n" +
+                      "            \"enableAcceleratedNetworking\": false,\n" +
+                      "            \"dnsSettings\": {\n" +
+                      "              \"dnsServers\": [\"8.8.8.8\"]\n" +
+                      "            },\n" +
+                      "            \"ipConfigurations\": [{\n" +
+                      "              \"name\": \"ipconfig1\",\n" +
+                      "              \"properties\": {\n" +
+                      "                \"publicIPAddressConfiguration\": {\n" +
+                      "                  \"name\": \"pub1\",\n" +
+                      "                  \"properties\": {\n" +
+                      "                    \"idleTimeoutInMinutes\": 15\n" +
+                      "                  }\n" +
+                      "                },\n" +
+                      "                \"subnet\": {\n" +
+                      "                  \"name\": \"virtualNetworkName\",\n" +
+                      "                  \"id\": \"/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxxx/resourceGroups/" +
+                      "jcloud-eastus/providers/Microsoft.Network/virtualNetworks/" +
+                      "jclouds-eastus-virtualNetworkName/subnets/jclouds-eastus-subnet\",\n" +
+                      "                  \"properties\": {}\n" +
+                      "                },\n" +
+                      "                \"privateIPAddressVersion\": \"IPv4\",\n" +
+                      "                \"loadBalancerBackendAddressPools\": [],\n" +
+                      "                \"loadBalancerInboundNatPools\": []\n" +
+                      "              }\n" +
+                      "            }\n" +
+                      "            ]\n" +
+                      "          }\n" +
+                      "        }\n" +
+                      "        ]\n" +
+                      "      },\n" +
+                      "      \"extensionProfile\": {\n" +
+                      "        \"extensions\": [{\n" +
+                      "          \"name\": \"extensionName\",\n" +
+                      "          \"properties\": {\n" +
+                      "            \"publisher\": \"Microsoft.compute\",\n" +
+                      "            \"type\": \"CustomScriptExtension\",\n" +
+                      "            \"typeHandlerVersion\": \"1.1\",\n" +
+                      "            \"autoUpgradeMinorVersion\": false,\n" +
+                      "            \"settings\": {\n" +
+                      "              \"fileUris\": [\"https://mystorage1.blob.core.windows.net/winvmextekfacnt/" +
+                      "SampleCmd_1.cmd\"],\n" +
+                      "              \"commandToExecute\": \"SampleCmd_1.cmd\"\n" +
+                      "            },\n" +
+                      "            \"protectedSettings\": {\n" +
+                      "              \"StorageAccountKey\": \"jclouds-accountkey\"\n" +
+                      "            }\n" +
+                      "          }\n" +
+                      "        }\n" +
+                      "        ]\n" +
+                      "      }\n" +
+                      "    }\n" +
+                      "  }\n" +
+                      "}\n"
+              );
    }
 
    private VirtualMachineScaleSet CreateOrUpdateVMSS(VirtualMachineScaleSetApi vmssAPI) {
@@ -260,6 +225,7 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
                       true,
                       true,
                       VirtualMachineScaleSetUpgradePolicy.create("Manual"),
+                      null,
                       VirtualMachineScaleSetVirtualMachineProfile.create(
                               StorageProfile.create(
                                       ImageReference.create(
@@ -293,10 +259,10 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
                                               null))),
                               VirtualMachineScaleSetOSProfile.create(
                                       "jclouds-vmssname",
-                                      "jclouds",
-                                      "jClouds1!",
+                                      "admin",
+                                      "password",
                                       VirtualMachineScaleSetOSProfile.LinuxConfiguration.create(
-                                              "False",
+                                              false,
                                               null),
                                       null,
                                       new ArrayList<Secrets>()),
@@ -465,18 +431,19 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
    public void testDeleteWhen404() throws InterruptedException {
       server.enqueue(jsonResponse("/virtualmachinescalesetlist.json").setResponseCode(404));
       final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      vmssAPI.delete(vmssname);
+      assertNull(vmssAPI.delete(vmssname));
       assertSent(server,
               "DELETE",
               "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/" +
                       "Microsoft.Compute"
               + "/VirtualMachineScaleSets/" + vmssname + "?api-version=2017-03-30");
+
    }
 
    public void testDelete() throws InterruptedException {
       server.enqueue(response202WithHeader());
       final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      vmssAPI.delete(vmssname);
+      assertNotNull(vmssAPI.delete(vmssname));
       assertSent(server,
               "DELETE",
               "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/" +
