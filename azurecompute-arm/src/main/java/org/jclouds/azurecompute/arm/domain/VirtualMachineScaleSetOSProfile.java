@@ -74,7 +74,7 @@ public abstract class VirtualMachineScaleSetOSProfile {
       /**
        * The authentication method password or ssh
        */
-      public abstract String disablePasswordAuthentication();
+      public abstract Boolean disablePasswordAuthentication();
 
       /**
        * ssh keys
@@ -83,7 +83,7 @@ public abstract class VirtualMachineScaleSetOSProfile {
       public abstract SSH ssh();
 
       @SerializedNames({"disablePasswordAuthentication", "ssh"})
-      public static LinuxConfiguration create(final String disablePasswordAuthentication,
+      public static LinuxConfiguration create(final Boolean disablePasswordAuthentication,
                                               final SSH ssh) {
 
          return new AutoValue_VirtualMachineScaleSetOSProfile_LinuxConfiguration(disablePasswordAuthentication,
