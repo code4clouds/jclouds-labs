@@ -439,7 +439,7 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
    public void testList() throws InterruptedException {
       server.enqueue(jsonResponse("/virtualmachinescalesetlist.json").setResponseCode(200));
       final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourcegroup);
-      assertEquals(vmssAPI.list().size(),1);
+      assertEquals(vmssAPI.list().size(), 1);
       assertSent(server,
               "GET",
               "/subscriptions/SUBSCRIPTIONID/resourceGroups/myresourcegroup/providers/" +
@@ -451,7 +451,7 @@ public class VirtualMachineScaleSetApiMockTest extends BaseAzureComputeApiMockTe
       server.enqueue(
               jsonResponse("/virtualmachinescalesetlistwhen404.json").setResponseCode(404));
       final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(
-              resourcegroup+"1");
+              resourcegroup + "1");
       List<VirtualMachineScaleSet> vmssList = vmssAPI.list();
       assertSent(server,
               "GET",
