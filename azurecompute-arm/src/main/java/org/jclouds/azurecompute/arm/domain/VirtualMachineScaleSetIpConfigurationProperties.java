@@ -46,13 +46,11 @@ public abstract class VirtualMachineScaleSetIpConfigurationProperties {
    /**
     * The load balancer backend address pools of the Virtual Machine Scale Set Ip Configuration Properties
     */
-   @Nullable
    public abstract List<IdReference> loadBalancerBackendAddressPools();
 
    /**
     * The load balancer inbound nat pools of the Virtual Machine Scale Set Ip Configuration Properties
     */
-   @Nullable
    public abstract List<IdReference> loadBalancerInboundNatPools();
 
    /**
@@ -77,8 +75,8 @@ public abstract class VirtualMachineScaleSetIpConfigurationProperties {
          .publicIPAddressConfiguration(publicIPAddressConfiguration)
          .subnet(subnet)
          .privateIPAddressVersion(privateIPAddressVersion)
-         .loadBalancerBackendAddressPools(loadBalancerBackendAddressPools)
-         .loadBalancerInboundNatPools(loadBalancerInboundNatPools)
+         .lbBackendAddressPools(loadBalancerBackendAddressPools)
+         .lbInboundNatPools(loadBalancerInboundNatPools)
          .applicationGatewayBackendAddressPools(applicationGatewayBackendAddressPools)
          .build();
    }
@@ -86,7 +84,9 @@ public abstract class VirtualMachineScaleSetIpConfigurationProperties {
    public abstract Builder toBuilder();
 
    public static Builder builder() {
-      return new AutoValue_VirtualMachineScaleSetIpConfigurationProperties.Builder();
+      return new AutoValue_VirtualMachineScaleSetIpConfigurationProperties.Builder()
+              .lbBackendAddressPools(null)
+              .lbInboundNatPools(null);
    }
 
    @AutoValue.Builder
@@ -95,27 +95,39 @@ public abstract class VirtualMachineScaleSetIpConfigurationProperties {
 
       public abstract Builder subnet(Subnet subnet);
 
-      public abstract Builder privateIPAddressVersion(String privateIPAddressVersion);
-
       public abstract Builder loadBalancerBackendAddressPools(List<IdReference> loadBalancerBackendAddressPools);
 
       public abstract Builder loadBalancerInboundNatPools(List<IdReference> loadBalancerInboundNatPools);
 
+      public abstract Builder privateIPAddressVersion(String privateIPAddressVersion);
+
+      public Builder lbBackendAddressPools(List<IdReference> loadBalancerBackendAddressPools) {
+         return loadBalancerBackendAddressPools(loadBalancerBackendAddressPools != null ? ImmutableList
+                 .copyOf(loadBalancerBackendAddressPools) : ImmutableList.<IdReference>of());
+      }
+      public Builder lbInboundNatPools(List<IdReference> loadBalancerInboundNatPools) {
+         return loadBalancerInboundNatPools(loadBalancerInboundNatPools != null ? ImmutableList
+         .copyOf(loadBalancerInboundNatPools) : ImmutableList.<IdReference>of());
+      }
+
       public abstract Builder applicationGatewayBackendAddressPools(String applicationGatewayBackendAddressPools);
 
-      abstract List<IdReference> loadBalancerBackendAddressPools();
+//      abstract List<IdReference> loadBalancerBackendAddressPools();
+//
+//      abstract List<IdReference> loadBalancerInboundNatPools();
+//
+//      abstract VirtualMachineScaleSetIpConfigurationProperties autoBuild();
 
-      abstract List<IdReference> loadBalancerInboundNatPools();
+//      public VirtualMachineScaleSetIpConfigurationProperties build() {
+//         loadBalancerBackendAddressPools(loadBalancerBackendAddressPools() != null ? ImmutableList
+//            .copyOf(loadBalancerBackendAddressPools()) : ImmutableList.<IdReference>of());
+//         loadBalancerInboundNatPools(loadBalancerInboundNatPools() != null ? ImmutableList
+//            .copyOf(loadBalancerInboundNatPools()) : ImmutableList.<IdReference>of());
+//         return autoBuild();
+//      }
 
-      abstract VirtualMachineScaleSetIpConfigurationProperties autoBuild();
+      public abstract VirtualMachineScaleSetIpConfigurationProperties build();
 
-      public VirtualMachineScaleSetIpConfigurationProperties build() {
-         loadBalancerBackendAddressPools(loadBalancerBackendAddressPools() != null ? ImmutableList
-            .copyOf(loadBalancerBackendAddressPools()) : ImmutableList.<IdReference>of());
-         loadBalancerInboundNatPools(loadBalancerInboundNatPools() != null ? ImmutableList
-            .copyOf(loadBalancerInboundNatPools()) : ImmutableList.<IdReference>of());
-         return autoBuild();
-      }
    }
 }
 
