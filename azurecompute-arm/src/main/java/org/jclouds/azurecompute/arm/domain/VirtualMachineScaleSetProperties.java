@@ -17,12 +17,31 @@
 package org.jclouds.azurecompute.arm.domain;
 
 import com.google.auto.value.AutoValue;
+import org.jclouds.azurecompute.arm.util.GetEnumValue;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
 
 @AutoValue
 public abstract class VirtualMachineScaleSetProperties {
+
+   public enum ProvisioningState {
+      ACCEPTED,
+      CREATING,
+      READY,
+      CANCELED,
+      FAILED,
+      DELETED,
+      SUCCEEDED,
+      RUNNING,
+      UPDATING,
+      UNRECOGNIZED;
+
+      public static ProvisioningState fromValue(final String text) {
+         return (ProvisioningState) GetEnumValue.fromValueOrDefault(text, ProvisioningState.UNRECOGNIZED);
+      }
+   }
+
    /**
     * The singlePlacementGroup of the VirtualMachineScaleSetProperties
     */
@@ -41,18 +60,25 @@ public abstract class VirtualMachineScaleSetProperties {
    public abstract VirtualMachineScaleSetUpgradePolicy upgradePolicy();
 
    /**
+    *  Specifies the state of the provision of the virtual machine scale set
+    */
+   @Nullable
+   public abstract ProvisioningState provisioningState();
+
+   /**
     *  Specifies the virtual machine profile of the virtual machine scale set
     */
    public abstract VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile();
 
-   @SerializedNames({"singlePlacementGroup", "overProvision", "upgradePolicy", "virtualMachineProfile"})
+   @SerializedNames({"singlePlacementGroup", "overProvision", "upgradePolicy", "provisioningState", "virtualMachineProfile"})
    public static VirtualMachineScaleSetProperties create(
       final Boolean singlePlacementGroup,
       final Boolean overProvision,
       final VirtualMachineScaleSetUpgradePolicy upgradePolicy,
+      final ProvisioningState provisioningState,
       final VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile) {
       return builder().singlePlacementGroup(singlePlacementGroup).overProvision(overProvision).
-         upgradePolicy(upgradePolicy).virtualMachineProfile(virtualMachineProfile).build();
+         upgradePolicy(upgradePolicy).provisioningState(provisioningState).virtualMachineProfile(virtualMachineProfile).build();
    }
 
    public abstract Builder toBuilder();
@@ -66,8 +92,8 @@ public abstract class VirtualMachineScaleSetProperties {
       public abstract Builder singlePlacementGroup(Boolean singlePlacementGroup);
       public abstract Builder overProvision(Boolean overProvision);
       public abstract Builder upgradePolicy(VirtualMachineScaleSetUpgradePolicy upgradePolicy);
+      public abstract Builder provisioningState(ProvisioningState provisioningState);
       public abstract Builder virtualMachineProfile(VirtualMachineScaleSetVirtualMachineProfile virtualMachineProfile);
-
 
       public abstract VirtualMachineScaleSetProperties build();
    }
