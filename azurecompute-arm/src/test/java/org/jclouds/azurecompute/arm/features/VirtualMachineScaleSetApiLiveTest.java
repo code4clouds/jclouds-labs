@@ -16,6 +16,7 @@
  */
 package org.jclouds.azurecompute.arm.features;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableMap;
 import org.jclouds.azurecompute.arm.domain.DataDisk;
 import org.jclouds.azurecompute.arm.domain.Extension;
@@ -35,6 +36,7 @@ import org.jclouds.azurecompute.arm.domain.NetworkProfile;
 import org.jclouds.azurecompute.arm.domain.OSDisk;
 import org.jclouds.azurecompute.arm.domain.StorageProfile;
 import org.jclouds.azurecompute.arm.domain.Subnet;
+import org.jclouds.azurecompute.arm.domain.VirtualMachineProperties;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSet;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetDNSSettings;
 import org.jclouds.azurecompute.arm.domain.VirtualMachineScaleSetIpConfiguration;
@@ -52,6 +54,7 @@ import org.jclouds.azurecompute.arm.internal.BaseAzureComputeApiLiveTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,6 +62,9 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Arrays;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.jclouds.util.Predicates2.retry;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
@@ -97,15 +103,42 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
       vmssName = String.format("%3.24s", System.getProperty("user.name") + RAND + this.getClass().getSimpleName()).toLowerCase().substring(0, 15);
    }
 
+   private VirtualMachineScaleSetApi api() {
+      return api.getVirtualMachineScaleSetApi(resourceGroupName);
+   }
+
    @Test
    public void testCreate() {
       VirtualMachineScaleSet vmss = api().createOrUpdate(vmssName, LOCATIONDESCRIPTION, getSKU(),
          Collections.<String, String>emptyMap(), getProperties());
       assertTrue(!vmss.name().isEmpty());
+//      waitUntilReady(vmssName);
    }
 
-   private VirtualMachineScaleSetApi api() {
-      return api.getVirtualMachineScaleSetApi(resourceGroupName);
+   @Test(dependsOnMethods = "testCreate")
+   public void testList() throws InterruptedException {
+      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourceGroupName);
+      assertEquals(vmssAPI.list().size(), 1);
+   }
+
+   @Test(dependsOnMethods = "testList")
+   public void testGet()  {
+      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourceGroupName);
+      assertEquals(vmssAPI.get(vmssName).name(), vmssName);
+   }
+
+   @Test(dependsOnMethods = "testGet", alwaysRun = true)
+   public void testDelete() throws Exception {
+      final VirtualMachineScaleSetApi vmssAPI = api.getVirtualMachineScaleSetApi(resourceGroupName);
+      URI uri = vmssAPI.delete(vmssName);
+      assertResourceDeleted(uri);
+   }
+
+   protected void assertResourceDeleted(URI uri) {
+      if (uri != null) {
+         assertTrue(resourceDeleted.apply(uri),
+                 String.format("Resource %s was not terminated in the configured timeout", uri));
+      }
    }
 
 
@@ -171,7 +204,7 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
 
    private VirtualMachineScaleSetOSProfile getOSProfile() {
       VirtualMachineScaleSetOSProfile.LinuxConfiguration linuxConfiguration =
-         VirtualMachineScaleSetOSProfile.LinuxConfiguration.create("False", null);
+         VirtualMachineScaleSetOSProfile.LinuxConfiguration.create(false, null);
       VirtualMachineScaleSetOSProfile.WindowsConfiguration windowsConfiguration = null;
 
       return VirtualMachineScaleSetOSProfile.create(vmssName, "jclouds", "jClouds1!",
@@ -246,7 +279,7 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
 
    public VirtualMachineScaleSetProperties getProperties() {
 
-      return VirtualMachineScaleSetProperties.create(null, null, getUpgradePolicy(), getVirtualMachineProfile());
+      return VirtualMachineScaleSetProperties.create(null, null, getUpgradePolicy(), null, getVirtualMachineProfile());
    }
 
    private NetworkInterfaceCard createNetworkInterfaceCard(final String resourceGroupName, String networkInterfaceCardName, String locationName, String ipConfigurationName) {
@@ -264,4 +297,5 @@ public class VirtualMachineScaleSetApiLiveTest extends BaseAzureComputeApiLiveTe
    public String getSubscriptionid() {
       return subscriptionid;
    }
+
 }
